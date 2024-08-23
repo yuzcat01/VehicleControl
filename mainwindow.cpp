@@ -27,6 +27,8 @@ void MainWindow::init()
     connect(&weather,&Weather::toHome,this,[=]{
         ui->stackedWidget->setCurrentWidget(&home);
     });
+    // MusicPage
+    ui->stackedWidget->addWidget(&musicPage);
     // To add
 }
 
