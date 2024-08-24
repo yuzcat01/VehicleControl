@@ -27,22 +27,54 @@ void MusicPage::on_playBtn_clicked()
 {
     if(isPlaying)
     {
+        player->pause();
         isPlaying = false;
         ui->playBtn->setIcon(*mediaPlaybackStart);
     }
     else
     {
+        if(ui->musicList->count() <= 0)
+            return;
         isPlaying = true;
         ui->playBtn->setIcon(*mediaPlaybackPause);
+        if(player->playbackState() == QMediaPlayer::PausedState)
+        {
+            player->play();
+            return;
+        }
+        player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+        player->play();
+    }
+}
+
+void MusicPage::on_previousBtn_clicked()
+{
+    int curRow = ui->musicList->currentRow();
+    --curRow;
+    curRow = curRow < 0 ? ui->musicList->count() -1 : curRow;
+    if(curRow >= 0)
+    {
+        ui->musicList->setCurrentRow(curRow);
+        player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+        isPlaying = true;
+        player->play();
     }
 }
 
 
 void MusicPage::on_nextBtn_clicked()
 {
-
+    int curRow = ui->musicList->currentRow();
+    ++curRow;
+    curRow = curRow > ui->musicList->count() -1 ? 0 : curRow;
+    if(curRow >= 0)
+    {
+        ui->musicList->setCurrentRow(curRow);
+        player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+        isPlaying = true;
+        player->play();
+    }
 }
-
 
 void MusicPage::on_musicBtn_clicked()
 {

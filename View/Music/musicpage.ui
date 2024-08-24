@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>537</width>
-    <height>382</height>
+    <width>1024</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>320</y>
-     <width>521</width>
+     <y>510</y>
+     <width>1001</width>
      <height>52</height>
     </rect>
    </property>
@@ -158,7 +158,7 @@
      <x>10</x>
      <y>10</y>
      <width>52</width>
-     <height>291</height>
+     <height>481</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -271,7 +271,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset theme="QIcon::ThemeIcon::FormatTextDirectionLtr"/>
+       <iconset theme="format-justify-fill"/>
       </property>
       <property name="iconSize">
        <size>
@@ -288,8 +288,8 @@
     <rect>
      <x>80</x>
      <y>10</y>
-     <width>451</width>
-     <height>291</height>
+     <width>931</width>
+     <height>441</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -301,8 +301,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>441</width>
-       <height>291</height>
+       <width>931</width>
+       <height>441</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -344,7 +344,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QListWidget" name="MusicList">
+       <widget class="QListWidget" name="musicList">
         <property name="editTriggers">
          <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
         </property>
@@ -360,6 +360,45 @@
     </widget>
    </widget>
    <widget class="QWidget" name="page_2"/>
+  </widget>
+  <widget class="QSlider" name="musicSlider">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>470</y>
+     <width>831</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Orientation::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="nowTime">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>470</y>
+     <width>31</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="allTime">
+   <property name="geometry">
+    <rect>
+     <x>980</x>
+     <y>470</y>
+     <width>31</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>951</width>
-    <height>696</height>
+    <width>1024</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,15 +17,14 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>60</y>
-      <width>781</width>
-      <height>541</height>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>576</height>
      </rect>
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
