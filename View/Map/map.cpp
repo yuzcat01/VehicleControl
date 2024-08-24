@@ -33,8 +33,6 @@ Map::Map(QWidget *parent)
 
     //初始化
     init();
-    //获取当前的外网ip
-    getIp();
 }
 
 Map::~Map()
@@ -63,8 +61,6 @@ void Map::init(){
 
     //网络管理对象
     m_mapManager =new QNetworkAccessManager(this);
-
-
 }
 
 //获取当前主机ip   发送请求
@@ -186,19 +182,8 @@ void  Map::onSendMapRequest(){
         if(pixmap.load(m_mapFileName)){
             ui->mapWidget->setStyleSheet("QWidget{border-image:url(./map.png);}");
         }
-
     });
-
-
-
-
 }
-
-
-
-
-
-
 
 //搜索地址  发送请求
 void Map::on_searchBtn_clicked()

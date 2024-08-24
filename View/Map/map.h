@@ -17,6 +17,8 @@ class Map : public QWidget
 public:
     explicit Map(QWidget *parent = nullptr);
     ~Map();
+    //获取当前主机ip
+    void getIp();
 
 signals:
     void toHome();
@@ -81,9 +83,6 @@ private:
     //y轴距离差
     double my;
 
-
-    //获取当前主机ip
-    void getIp();
     //根据ip获取经纬度  发送请求
     void getCurrentLoc();
     // 发送请求  获取地图图片

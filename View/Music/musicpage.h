@@ -41,7 +41,6 @@ private slots:
 private:
     Ui::MusicPage *ui;
     QMediaPlayer *player;
-    bool isPlaying;
 
     QIcon *mediaPlaybackStart;
     QIcon *mediaPlaybackPause;

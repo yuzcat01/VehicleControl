@@ -39,6 +39,7 @@ void MainWindow::init()
     ui->stackedWidget->addWidget(&map);
     connect(&home,&Home::toMap,this,[=](){
         ui->stackedWidget->setCurrentWidget(&map);
+        map.getIp();
     });
     connect(&map,&Map::toHome,this,[=]{
         ui->stackedWidget->setCurrentWidget(&home);

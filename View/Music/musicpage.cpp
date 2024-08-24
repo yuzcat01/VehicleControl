@@ -10,7 +10,6 @@ MusicPage::MusicPage(QWidget *parent)
     , mediaPlaybackPause(new QIcon(QIcon::fromTheme("media-playback-pause")))
 {
     ui->setupUi(this);
-    isPlaying = false;
 }
 
 MusicPage::~MusicPage()
@@ -26,17 +25,15 @@ void MusicPage::on_backToHome_clicked()
 
 void MusicPage::on_playBtn_clicked()
 {
-    if(isPlaying)
+    if(player->playbackState() == QMediaPlayer::PlayingState)
     {
         player->pause();
-        isPlaying = false;
         ui->playBtn->setIcon(*mediaPlaybackStart);
     }
     else
     {
         if(ui->musicList->count() <= 0)
             return;
-        isPlaying = true;
         ui->playBtn->setIcon(*mediaPlaybackPause);
         if(player->playbackState() == QMediaPlayer::PausedState)
         {
@@ -57,7 +54,6 @@ void MusicPage::on_previousBtn_clicked()
     {
         ui->musicList->setCurrentRow(curRow);
         player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
-        isPlaying = true;
         player->play();
     }
 }
@@ -72,7 +68,6 @@ void MusicPage::on_nextBtn_clicked()
     {
         ui->musicList->setCurrentRow(curRow);
         player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
-        isPlaying = true;
         player->play();
     }
 }
@@ -108,7 +103,6 @@ void MusicPage::on_addBtn_clicked()
         ui->musicList->addItem(aItem);
     }
 
-    //如果现在没有正在播放，就开始播放第一个文件
     if(player->playbackState() != QMediaPlayer::PlayingState){
         ui->musicList->setCurrentRow(0);
         QUrl source = ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>();
