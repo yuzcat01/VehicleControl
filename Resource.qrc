@@ -1,9 +1,14 @@
 <RCC>
-    <qresource prefix="/new/prefix1">
+    <qresource prefix="/img/prefix1">
         <file>Resource/img/Weather/w0.png</file>
         <file>Resource/img/Weather/w1.png</file>
         <file>Resource/img/Weather/w2.png</file>
         <file>Resource/img/Weather/w3.png</file>
         <file>Resource/img/Weather/w4.png</file>
+        <file>Resource/img/Map/enlarge.png</file>
+        <file>Resource/img/Map/reduce.png</file>
+    </qresource>
+    <qresource prefix="/qss/prefix2">
+        <file>Resource/qss/myQss.qss</file>
     </qresource>
 </RCC>

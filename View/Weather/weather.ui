@@ -30,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>80</y>
+     <y>70</y>
      <width>611</width>
      <height>391</height>
     </rect>
@@ -74,50 +74,11 @@
      <string>城市</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>110</y>
-      <width>121</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>温度</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>260</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PM2.5</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>170</y>
-      <width>121</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>天气</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="img">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>210</y>
+      <x>80</x>
+      <y>180</y>
       <width>111</width>
       <height>111</height>
      </rect>
@@ -130,7 +91,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>50</y>
+      <y>20</y>
       <width>131</width>
       <height>31</height>
      </rect>
@@ -160,6 +121,68 @@
       <string>上海</string>
      </property>
     </item>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>110</y>
+      <width>201</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Tab 1</string>
+     </attribute>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>温度</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>121</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>天气</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>160</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PM2.5</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
  </widget>

@@ -15,6 +15,7 @@ public:
     explicit Weather(QWidget *parent = nullptr);
     ~Weather();
     void getWeather();
+    void init();
 
 signals:
     void toHome();

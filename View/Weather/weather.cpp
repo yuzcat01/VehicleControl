@@ -20,8 +20,16 @@ Weather::Weather(QWidget *parent)
     , cityCode("101010100")
 {
     ui->setupUi(this);
+    init();
+
+
 }
 
+void Weather::init()
+{
+    ui->tabWidget->setTabText(0,"今日天气");
+    ui->tabWidget->setTabText(1,"未来七天天气预报");
+}
 Weather::~Weather()
 {
     delete ui;
@@ -86,13 +94,13 @@ void Weather::getWeather()
                                             QJsonValue type = todayWeatherObj.value("type");
                                             ui->label_5->setText("天气：" + type.toString());
                                             if(type.toString() == "晴")
-                                                ui->img->setPixmap(QPixmap(":/new/prefix1/Resource/img/Weather/w0.png"));
+                                                ui->img->setPixmap(QPixmap(":/img/prefix1/Resource/img/Weather/w0.png"));
                                             else if(type.toString() == "多云")
-                                                ui->img->setPixmap(QPixmap(":/new/prefix1/Resource/img/Weather/w1.png"));
+                                                ui->img->setPixmap(QPixmap(":/img/prefix1/Resource/img/Weather/w1.png"));
                                             else if(type.toString() == "阴")
-                                                ui->img->setPixmap(QPixmap(":/new/prefix1/Resource/img/Weather/w2.png"));
+                                                ui->img->setPixmap(QPixmap(":/img/prefix1/Resource/img/Weather/w2.png"));
                                             else if(type.toString().endsWith("雨"))
-                                                ui->img->setPixmap(QPixmap(":/new/prefix1/Resource/img/Weather/w3.png"));
+                                                ui->img->setPixmap(QPixmap(":/img/prefix1/Resource/img/Weather/w3.png"));
 
                                         }
                                     }
