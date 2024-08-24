@@ -288,7 +288,7 @@
     <rect>
      <x>90</x>
      <y>10</y>
-     <width>921</width>
+     <width>450</width>
      <height>441</height>
     </rect>
    </property>
@@ -301,7 +301,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>381</width>
+       <width>451</width>
        <height>441</height>
       </rect>
      </property>
@@ -310,6 +310,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QPushButton" name="addBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">color : rgb(255, 255, 255)</string>
           </property>
@@ -324,6 +330,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="removeBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">color : rgb(255, 255, 255)</string>
           </property>
@@ -338,6 +350,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="clearBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">color : rgb(255, 255, 255)</string>
           </property>
@@ -406,6 +424,19 @@
      <y>470</y>
      <width>31</width>
      <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>10</y>
+     <width>451</width>
+     <height>441</height>
     </rect>
    </property>
    <property name="text">
