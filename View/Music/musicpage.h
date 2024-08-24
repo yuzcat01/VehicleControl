@@ -15,6 +15,12 @@ public:
     explicit MusicPage(QWidget *parent = nullptr);
     ~MusicPage();
 
+signals:
+    void toHome();
+
+private slots:
+    void on_backToHome_clicked();
+
 private:
     Ui::MusicPage *ui;
 };

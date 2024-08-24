@@ -12,3 +12,7 @@ MusicPage::~MusicPage()
 {
     delete ui;
 }
+void MusicPage::on_backToHome_clicked()
+{
+    emit toHome();
+}

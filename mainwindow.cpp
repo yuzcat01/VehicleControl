@@ -29,6 +29,12 @@ void MainWindow::init()
     });
     // MusicPage
     ui->stackedWidget->addWidget(&musicPage);
+    connect(&home,&Home::toMusicPage,this,[=](){
+        ui->stackedWidget->setCurrentWidget(&musicPage);
+    });
+    connect(&musicPage,&MusicPage::toHome,this,[=]{
+        ui->stackedWidget->setCurrentWidget(&home);
+    });
     // To add
 }
 

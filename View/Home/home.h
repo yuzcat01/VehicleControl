@@ -17,9 +17,11 @@ public:
 
 signals:
     void toWeather();
+    void toMusicPage();
 
 private slots:
     void on_pushButton_clicked();
+    void on_toMusicPage_clicked();
 
 private:
     Ui::Home *ui;
