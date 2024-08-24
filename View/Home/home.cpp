@@ -1,6 +1,9 @@
 #include "home.h"
 #include "ui_home.h"
 
+#include <QPainter>
+#include <QTimer>
+
 Home::Home(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Home)
