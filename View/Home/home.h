@@ -14,6 +14,8 @@ class Home : public QWidget
 public:
     explicit Home(QWidget *parent = nullptr);
     ~Home();
+    void lookTime();
+    void init();
 
 signals:
     void toWeather();
@@ -36,6 +38,8 @@ private slots:
     void on_toPic_clicked();
 
     void on_toBrow_clicked();
+
+    void updateTime();
 
 private:
     Ui::Home *ui;
