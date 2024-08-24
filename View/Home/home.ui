@@ -16,10 +16,10 @@
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>60</y>
-     <width>541</width>
-     <height>381</height>
+     <x>0</x>
+     <y>0</y>
+     <width>661</width>
+     <height>441</height>
     </rect>
    </property>
    <widget class="QLabel" name="label">
@@ -59,6 +59,71 @@
     </property>
     <property name="text">
      <string>音乐</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>190</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>地图</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="toCommu">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>280</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>通讯</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="toVedio">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>280</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>视频</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="toPic">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>280</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>图片</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="toBrow">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>370</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>浏览器</string>
     </property>
    </widget>
   </widget>
