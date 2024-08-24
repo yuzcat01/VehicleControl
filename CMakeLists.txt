@@ -28,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         View/Weather/weather.h View/Weather/weather.cpp View/Weather/weather.ui
         README.md
         Resource.qrc
+        View/Music/musicpage.h View/Music/musicpage.cpp View/Music/musicpage.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET VehicleControl APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

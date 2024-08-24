@@ -15,6 +15,10 @@ Home::~Home()
 
 void Home::on_pushButton_clicked()
 {
-     emit toWeather();
+    emit toWeather();
 }
 
+void Home::on_toMusicPage_clicked()
+{
+    emit toMusicPage();
+}

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "./View/Home/home.h"
 #include "./View/Weather/weather.h"
+#include "./View/Music/musicpage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,14 +20,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //init and show home
     void init();
     void showHome();
-    //to add
 
 private:
     Ui::MainWindow *ui;
     Home home;
     Weather weather;
+    MusicPage musicPage;
+    //to add
 };
 #endif // MAINWINDOW_H
