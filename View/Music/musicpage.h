@@ -2,6 +2,7 @@
 #define MUSICPAGE_H
 
 #include <QWidget>
+#include <QtMultimedia>
 
 namespace Ui {
 class MusicPage;
@@ -21,8 +22,21 @@ signals:
 private slots:
     void on_backToHome_clicked();
 
+    void on_playBtn_clicked();
+
+    void on_nextBtn_clicked();
+
+    void on_musicBtn_clicked();
+
+    void on_musicListBtn_clicked();
+
 private:
     Ui::MusicPage *ui;
+    QMediaPlayer *player;
+    bool isPlaying;
+
+    QIcon *mediaPlaybackStart;
+    QIcon *mediaPlaybackPause;
 };
 
 #endif // MUSICPAGE_H
