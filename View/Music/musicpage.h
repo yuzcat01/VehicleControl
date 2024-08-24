@@ -32,6 +32,12 @@ private slots:
 
     void on_previousBtn_clicked();
 
+    void on_addBtn_clicked();
+
+    void on_removeBtn_clicked();
+
+    void on_clearBtn_clicked();
+
 private:
     Ui::MusicPage *ui;
     QMediaPlayer *player;
