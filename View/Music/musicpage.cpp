@@ -189,31 +189,3 @@ bool MusicPage::eventFilter(QObject *watched, QEvent *event)
     }
     return QWidget::eventFilter(watched, event);
 }
-
-void MusicPage::mousePressEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton) {
-        isDragging = true;
-        lastMousePosition = event->globalPos() - frameGeometry().topLeft();
-        event->accept();
-    }
-    QWidget::mousePressEvent(event);
-}
-
-void MusicPage::mouseMoveEvent(QMouseEvent *event)
-{
-    if (isDragging && (event->buttons() & Qt::LeftButton)) {
-        move(event->globalPos() - lastMousePosition);
-        event->accept();
-    }
-    QWidget::mouseMoveEvent(event);
-}
-
-void MusicPage::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton) {
-        isDragging = false;
-        event->accept();
-    }
-    QWidget::mouseReleaseEvent(event);
-}
