@@ -29,6 +29,7 @@ void Weather::init()
 {
     ui->tabWidget->setTabText(0,"今日天气");
     ui->tabWidget->setTabText(1,"未来七天天气预报");
+    ui->tabWidget->setCurrentIndex(0);
 }
 Weather::~Weather()
 {

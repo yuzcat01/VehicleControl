@@ -9,7 +9,7 @@
 #include <QMap>
 #include <QList>
 #include <QPoint>
-#include "Canvas.h"
+#include "canvas.h"
 
 namespace Ui {
 class Map;
