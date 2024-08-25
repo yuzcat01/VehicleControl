@@ -10,5 +10,6 @@
     </qresource>
     <qresource prefix="/qss/prefix2">
         <file>Resource/qss/myQss.qss</file>
+        <file>View/Map/map.osm</file>
     </qresource>
 </RCC>

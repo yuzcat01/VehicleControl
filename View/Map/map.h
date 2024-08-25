@@ -5,6 +5,11 @@
 #include <QNetworkAccessManager>
 #include<QTimer>
 #include<QFile>
+#include <QXmlStreamReader>
+#include <QMap>
+#include <QList>
+#include <QPoint>
+#include "Canvas.h"
 
 namespace Ui {
 class Map;
@@ -18,7 +23,10 @@ public:
     explicit Map(QWidget *parent = nullptr);
     ~Map();
     //获取当前主机ip
+
+    //获取当前主机ip
     void getIp();
+
 
 signals:
     void toHome();
@@ -51,6 +59,7 @@ private:
     //响应对象 接收地图图片
     QNetworkReply *m_mapReply=NULL;
 
+    Canvas *canvas;
     //初始化
     void init();
     //baidu App key
@@ -62,7 +71,7 @@ private:
     //纬度
     double m_lat;
     //控制好地图的精度  高清或低清[3-18]
-    int m_zoom=12;
+    int m_zoom=15;
     //当前所在的城市
     QString m_city;
     //地图文件名

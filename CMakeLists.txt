@@ -35,6 +35,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         View/Vedio/vedio.h View/Vedio/vedio.cpp View/Vedio/vedio.ui
         View/Picture/picture.h View/Picture/picture.cpp View/Picture/picture.ui
         View/Browser/browser.h View/Browser/browser.cpp View/Browser/browser.ui
+        View/Map/canvas.h View/Map/canvas.cpp View/Map/canvas.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET VehicleControl APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
