@@ -17,6 +17,8 @@ find_package(Qt6 REQUIRED COMPONENTS MultimediaWidgets)
 INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}
 )
+find_package(Qt6 REQUIRED COMPONENTS Core Gui)
+
 
 set(PROJECT_SOURCES
         main.cpp
@@ -61,8 +63,13 @@ endif()
 
 target_link_libraries(VehicleControl PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(VehicleControl PRIVATE Qt6::Network)
+<<<<<<< HEAD
 target_link_libraries(VehicleControl PRIVATE Qt6::Multimedia)
 target_link_libraries(VehicleControl PRIVATE Qt6::MultimediaWidgets)
+=======
+target_link_libraries(VehicleControl PRIVATE Qt6::Multimedia Qt6::MultimediaWidgets)
+target_link_libraries(VehicleControl PRIVATE Qt6::Core Qt6::Gui)
+>>>>>>> 56ca79654b90c1ce07cb886e84e4d51863a859bf
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
