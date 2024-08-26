@@ -9,6 +9,9 @@
         <file>Resource/img/Map/reduce.png</file>
         <file>Resource/img/Music/icon-list.png</file>
         <file>Resource/img/Music/icon-musical.png</file>
+        <file>Resource/img/Music/icon-order.png</file>
+        <file>Resource/img/Music/icon-random.png</file>
+        <file>Resource/img/Music/icon-repeat.png</file>
     </qresource>
     <qresource prefix="/qss/prefix2">
         <file>Resource/qss/myQss.qss</file>

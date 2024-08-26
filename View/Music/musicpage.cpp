@@ -12,6 +12,7 @@ MusicPage::MusicPage(QWidget *parent)
     , audioVolumeMedium(new QIcon(QIcon::fromTheme("audio-volume-medium")))
     , audioVolumeLow(new QIcon(QIcon::fromTheme("audio-volume-low")))
     , audioVolumeMuted(new QIcon(QIcon::fromTheme("audio-volume-muted")))
+    , playModeFlag(0)
 {
     ui->setupUi(this);
     player->setAudioOutput(new QAudioOutput(this));
@@ -23,8 +24,11 @@ MusicPage::MusicPage(QWidget *parent)
 
     ui->volumeSlider->setSliderPosition(100);
 
+    ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-order.png"));
+
     connect(player, &QMediaPlayer::positionChanged, this, &MusicPage::do_positionChanged);
     connect(player, &QMediaPlayer::durationChanged, this, &MusicPage::do_durationChanged);
+    connect(player, &QMediaPlayer::playbackStateChanged, this, &MusicPage::do_playbackStateChanged);
 }
 
 MusicPage::~MusicPage()
@@ -235,3 +239,45 @@ void MusicPage::on_volumeSlider_valueChanged(int value)
         ui->volumeBtn->setIcon(*audioVolumeMuted);
 }
 
+
+void MusicPage::on_playModeBtn_clicked()
+{
+    ++playModeFlag;
+    if(playModeFlag > 2)
+        playModeFlag = 0;
+    if (playModeFlag == 0)
+        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-order.png"));
+    else if(playModeFlag == 1)
+        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-repeat.png"));
+    else
+        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-random.png"));
+}
+
+void MusicPage::do_playbackStateChanged(QMediaPlayer::PlaybackState newState)
+{
+    if((newState == QMediaPlayer::StoppedState) && (ui->musicList->count() > 0))
+    {
+        if(playModeFlag == 0)
+        {
+            int count = ui->musicList->count();
+            int curRow = ui->musicList->currentRow();
+            ++curRow;
+            curRow = curRow >= count ? 0 : curRow;
+            ui->musicList->setCurrentRow(curRow);
+            player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+            player->play();
+        }
+        else if(playModeFlag == 1)
+        {
+            player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+            player->play();
+        }
+        else
+        {
+            qint32 random = QRandomGenerator::global()->bounded(0, ui->musicList->count());
+            ui->musicList->setCurrentRow(random);
+            player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+            player->play();
+        }
+    }
+}

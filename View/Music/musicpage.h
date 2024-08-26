@@ -37,10 +37,13 @@ private slots:
 
     void do_positionChanged(qint64 position);
     void do_durationChanged(qint64 duration);
+    void do_playbackStateChanged(QMediaPlayer::PlaybackState newState);
 
     void on_volumeBtn_clicked();
 
     void on_volumeSlider_valueChanged(int value);
+
+    void on_playModeBtn_clicked();
 
 private:
     Ui::MusicPage *ui;
@@ -60,6 +63,8 @@ private:
 
     bool isDragging;
     QPoint lastMousePosition;
+
+    int playModeFlag;
 };
 
 #endif // MUSICPAGE_H
