@@ -325,7 +325,7 @@
     <rect>
      <x>90</x>
      <y>10</y>
-     <width>450</width>
+     <width>921</width>
      <height>441</height>
     </rect>
    </property>
@@ -413,8 +413,35 @@
       </item>
      </layout>
     </widget>
+    <widget class="QLabel" name="musicCover_1">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>0</y>
+       <width>451</width>
+       <height>441</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
-   <widget class="QWidget" name="page_2"/>
+   <widget class="QWidget" name="musicCoverPage">
+    <widget class="QLabel" name="musicCover_2">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>0</y>
+       <width>451</width>
+       <height>441</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QSlider" name="musicSlider">
    <property name="geometry">
@@ -449,19 +476,6 @@
      <y>470</y>
      <width>31</width>
      <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>560</x>
-     <y>10</y>
-     <width>451</width>
-     <height>441</height>
     </rect>
    </property>
    <property name="text">

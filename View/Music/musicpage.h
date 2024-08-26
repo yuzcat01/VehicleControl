@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtMultimedia>
+#include <QListWidgetItem>
 
 namespace Ui {
 class MusicPage;
@@ -11,7 +12,6 @@ class MusicPage;
 class MusicPage : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit MusicPage(QWidget *parent = nullptr);
     ~MusicPage();
@@ -46,6 +46,9 @@ private slots:
     void on_playModeBtn_clicked();
 
 private:
+
+    void init();
+    void setPlaySource(QListWidgetItem *item);
     Ui::MusicPage *ui;
 
     QMediaPlayer *player;
@@ -65,6 +68,7 @@ private:
     QPoint lastMousePosition;
 
     int playModeFlag;
+    int isNextOrPrevious;
 };
 
 #endif // MUSICPAGE_H

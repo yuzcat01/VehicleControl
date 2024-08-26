@@ -13,22 +13,25 @@ MusicPage::MusicPage(QWidget *parent)
     , audioVolumeLow(new QIcon(QIcon::fromTheme("audio-volume-low")))
     , audioVolumeMuted(new QIcon(QIcon::fromTheme("audio-volume-muted")))
     , playModeFlag(0)
+    , isNextOrPrevious(false)
 {
     ui->setupUi(this);
     player->setAudioOutput(new QAudioOutput(this));
 
-    ui->musicListBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-list.png"));
-    ui->musicBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-musical.png"));
+    ui->musicListBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icons/icon-list.png"));
+    ui->musicBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icons/icon-musical.png"));
 
     ui->musicSlider->installEventFilter(this);
 
     ui->volumeSlider->setSliderPosition(100);
 
-    ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-order.png"));
+    ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icons/icon-order.png"));
 
     connect(player, &QMediaPlayer::positionChanged, this, &MusicPage::do_positionChanged);
     connect(player, &QMediaPlayer::durationChanged, this, &MusicPage::do_durationChanged);
     connect(player, &QMediaPlayer::playbackStateChanged, this, &MusicPage::do_playbackStateChanged);
+
+    init();    
 }
 
 MusicPage::~MusicPage()
@@ -37,6 +40,56 @@ MusicPage::~MusicPage()
     delete player;
     delete mediaPlaybackStart;
     delete mediaPlaybackPause;
+}
+
+void MusicPage::init()
+{
+    QString musicFolderPath = QCoreApplication::applicationDirPath() + "/../../Resource/music";;
+    QDir musicDir(musicFolderPath);
+
+    QStringList nameFilters;
+    nameFilters << "*.mp3" << "*.wav" << "*.wma";
+    QFileInfoList fileList = musicDir.entryInfoList(nameFilters, QDir::Files);
+
+    foreach (const QFileInfo &fileInfo, fileList) {
+        QListWidgetItem *aItem = new QListWidgetItem(fileInfo.fileName());
+        aItem->setData(Qt::UserRole, QUrl::fromLocalFile(fileInfo.absoluteFilePath()));
+        ui->musicList->addItem(aItem);
+    }
+
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->musicCover_1->setAlignment(Qt::AlignCenter);
+    ui->musicCover_2->setAlignment(Qt::AlignCenter);
+}
+
+void MusicPage::setPlaySource(QListWidgetItem *item)
+{
+    player->setSource(item->data(Qt::UserRole).value<QUrl>());
+    QString name = item->text().split(".")[0];
+    QString coverPath = QCoreApplication::applicationDirPath() + "/../../Resource/img/Music/covers/" + name;
+    QString jpgPath = coverPath + ".jpg";
+    QString pngPath = coverPath + ".png";
+
+    // 检查封面图片是否存在
+    QFileInfo checkJpg(jpgPath);
+    QFileInfo checkPng(pngPath);
+    if (checkJpg.exists() && checkJpg.isFile())
+    {
+        QPixmap coverPixmap(jpgPath);
+        ui->musicCover_1->setPixmap(coverPixmap.scaled(ui->musicCover_1->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        ui->musicCover_2->setPixmap(coverPixmap.scaled(ui->musicCover_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+    else if (checkPng.exists() && checkPng.isFile())
+    {
+        QPixmap coverPixmap(pngPath);
+        ui->musicCover_1->setPixmap(coverPixmap.scaled(ui->musicCover_1->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        ui->musicCover_2->setPixmap(coverPixmap.scaled(ui->musicCover_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+    else
+    {
+        ui->musicCover_1->clear();
+        ui->musicCover_2->clear();
+    }
 }
 
 void MusicPage::on_backToHome_clicked()
@@ -63,34 +116,35 @@ void MusicPage::on_playBtn_clicked()
             player->play();
             return;
         }
-        player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+        setPlaySource(ui->musicList->currentItem());
         player->play();
     }
 }
 
 void MusicPage::on_previousBtn_clicked()
 {
+    isNextOrPrevious = true;
     int curRow = ui->musicList->currentRow();
     --curRow;
     curRow = curRow < 0 ? ui->musicList->count() -1 : curRow;
     if(ui->musicList->count() > 0)
     {
         ui->musicList->setCurrentRow(curRow);
-        player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+        setPlaySource(ui->musicList->currentItem());
         player->play();
     }
 }
 
-
 void MusicPage::on_nextBtn_clicked()
 {
+    isNextOrPrevious = true;
     int curRow = ui->musicList->currentRow();
     ++curRow;
     curRow = curRow > ui->musicList->count() -1 ? 0 : curRow;
     if(ui->musicList->count() > 0)
     {
         ui->musicList->setCurrentRow(curRow);
-        player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+        setPlaySource(ui->musicList->currentItem());
         player->play();
     }
 }
@@ -114,13 +168,9 @@ void MusicPage::on_addBtn_clicked()
     QStringList fileList = QFileDialog::getOpenFileNames(this, dlgTitle, curPath, filter);
     if(fileList.isEmpty())
         return;
-
     foreach (const auto& item, fileList) {
         QFileInfo fileInfo(item);
         QListWidgetItem *aItem = new QListWidgetItem(fileInfo.fileName());
-        /* To do
-        aItem->setIcon(QIcon(":/images/images/musicFile.png"));
-        */
         aItem->setData(Qt::UserRole, QUrl::fromLocalFile(item));
         ui->musicList->addItem(aItem);
     }
@@ -134,7 +184,7 @@ void MusicPage::on_removeBtn_clicked()
     delete ui->musicList->takeItem(index);
     if(ui->musicList->currentRow() >= 0)
     {
-        player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+        setPlaySource(ui->musicList->currentItem());
         player->play();
         ui->playBtn->setIcon(*mediaPlaybackPause);
     }
@@ -185,13 +235,11 @@ bool MusicPage::eventFilter(QObject *watched, QEvent *event)
         if (mouseEvent->button() == Qt::LeftButton)	//判断左键
         {
             int clickedValue = ui->musicSlider->minimum() + ((ui->musicSlider->maximum() - ui->musicSlider->minimum()) * mouseEvent->pos().x() / ui->musicSlider->width());
-            qDebug() << "触发了点击事件，位置为:" << clickedValue << Qt::endl;
             ui->musicSlider->setValue(clickedValue);
             player->setPosition(clickedValue); // 设置播放器位置
             return true;
         }
     } else if (event->type() == QEvent::MouseMove && watched == ui->musicSlider) {
-        qDebug() << "触发了移动事件" << Qt::endl;
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
         if (mouseEvent->buttons() & Qt::LeftButton) {
             int draggedValue = ui->musicSlider->minimum() + ((ui->musicSlider->maximum() - ui->musicSlider->minimum()) * mouseEvent->pos().x() / ui->musicSlider->width());
@@ -223,7 +271,6 @@ void MusicPage::on_volumeBtn_clicked()
         ui->volumeBtn->setIcon(*audioVolumeMuted);
 }
 
-
 void MusicPage::on_volumeSlider_valueChanged(int value)
 {
     player->audioOutput()->setVolume(value/100.0);
@@ -239,22 +286,26 @@ void MusicPage::on_volumeSlider_valueChanged(int value)
         ui->volumeBtn->setIcon(*audioVolumeMuted);
 }
 
-
 void MusicPage::on_playModeBtn_clicked()
 {
     ++playModeFlag;
     if(playModeFlag > 2)
         playModeFlag = 0;
     if (playModeFlag == 0)
-        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-order.png"));
+        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icons/icon-order.png"));
     else if(playModeFlag == 1)
-        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-repeat.png"));
+        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icons/icon-repeat.png"));
     else
-        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-random.png"));
+        ui->playModeBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icons/icon-random.png"));
 }
 
 void MusicPage::do_playbackStateChanged(QMediaPlayer::PlaybackState newState)
 {
+    if(isNextOrPrevious)
+    {
+        isNextOrPrevious = false;
+        return;
+    }
     if((newState == QMediaPlayer::StoppedState) && (ui->musicList->count() > 0))
     {
         if(playModeFlag == 0)
@@ -264,19 +315,19 @@ void MusicPage::do_playbackStateChanged(QMediaPlayer::PlaybackState newState)
             ++curRow;
             curRow = curRow >= count ? 0 : curRow;
             ui->musicList->setCurrentRow(curRow);
-            player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+            setPlaySource(ui->musicList->currentItem());
             player->play();
         }
         else if(playModeFlag == 1)
         {
-            player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+            setPlaySource(ui->musicList->currentItem());
             player->play();
         }
         else
         {
             qint32 random = QRandomGenerator::global()->bounded(0, ui->musicList->count());
             ui->musicList->setCurrentRow(random);
-            player->setSource(ui->musicList->currentItem()->data(Qt::UserRole).value<QUrl>());
+            setPlaySource(ui->musicList->currentItem());
             player->play();
         }
     }
