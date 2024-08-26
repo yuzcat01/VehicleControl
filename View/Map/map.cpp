@@ -171,8 +171,8 @@ void Map::onSearchLoc(QNetworkReply *reply){
     QJsonArray addrArray= jsonObj.value("results").toArray();
     QJsonObject addrJson=addrArray.at(0).toObject();
     QJsonObject xyJson=addrJson.value("location").toObject();
-    m_lng=xyJson.value("lng").toDouble();
-    m_lat=xyJson.value("lat").toDouble();
+    //m_lng=xyJson.value("lng").toDouble();
+    //m_lat=xyJson.value("lat").toDouble();
     m_city=addrJson.value("city").toString();
 
     qDebug()<<m_lng<<Qt::endl;

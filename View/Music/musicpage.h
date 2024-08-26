@@ -38,6 +38,10 @@ private slots:
     void do_positionChanged(qint64 position);
     void do_durationChanged(qint64 duration);
 
+    void on_volumeBtn_clicked();
+
+    void on_volumeSlider_valueChanged(int value);
+
 private:
     Ui::MusicPage *ui;
 
@@ -45,6 +49,11 @@ private:
 
     QIcon *mediaPlaybackStart;
     QIcon *mediaPlaybackPause;
+
+    QIcon *audioVolumeHigh;
+    QIcon *audioVolumeMedium;
+    QIcon *audioVolumeLow;
+    QIcon *audioVolumeMuted;
 
     QString positionTime;
     QString durationTime;

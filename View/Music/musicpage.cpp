@@ -8,11 +8,20 @@ MusicPage::MusicPage(QWidget *parent)
     , player(new QMediaPlayer)
     , mediaPlaybackStart(new QIcon(QIcon::fromTheme("media-playback-start")))
     , mediaPlaybackPause(new QIcon(QIcon::fromTheme("media-playback-pause")))
+    , audioVolumeHigh(new QIcon(QIcon::fromTheme("audio-volume-high")))
+    , audioVolumeMedium(new QIcon(QIcon::fromTheme("audio-volume-medium")))
+    , audioVolumeLow(new QIcon(QIcon::fromTheme("audio-volume-low")))
+    , audioVolumeMuted(new QIcon(QIcon::fromTheme("audio-volume-muted")))
 {
     ui->setupUi(this);
     player->setAudioOutput(new QAudioOutput(this));
 
+    ui->musicListBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-list.png"));
+    ui->musicBtn->setIcon(QIcon(":/img/prefix1/Resource/img/Music/icon-musical.png"));
+
     ui->musicSlider->installEventFilter(this);
+
+    ui->volumeSlider->setSliderPosition(100);
 
     connect(player, &QMediaPlayer::positionChanged, this, &MusicPage::do_positionChanged);
     connect(player, &QMediaPlayer::durationChanged, this, &MusicPage::do_durationChanged);
@@ -189,3 +198,40 @@ bool MusicPage::eventFilter(QObject *watched, QEvent *event)
     }
     return QWidget::eventFilter(watched, event);
 }
+
+void MusicPage::on_volumeBtn_clicked()
+{
+    bool mute = player->audioOutput()->isMuted();
+    player->audioOutput()->setMuted(!mute);
+    if(mute)
+    {
+        float volume = player->audioOutput()->volume();
+        if (volume > 0.66)
+            ui->volumeBtn->setIcon(*audioVolumeHigh);
+        else if (volume > 0.33)
+            ui->volumeBtn->setIcon(*audioVolumeMedium);
+        else if (volume > 0)
+            ui->volumeBtn->setIcon(*audioVolumeLow);
+        else
+            ui->volumeBtn->setIcon(*audioVolumeMuted);
+    }
+    else
+        ui->volumeBtn->setIcon(*audioVolumeMuted);
+}
+
+
+void MusicPage::on_volumeSlider_valueChanged(int value)
+{
+    player->audioOutput()->setVolume(value/100.0);
+
+    float volume = player->audioOutput()->volume();
+    if (volume > 0.66)
+        ui->volumeBtn->setIcon(*audioVolumeHigh);
+    else if (volume > 0.33)
+        ui->volumeBtn->setIcon(*audioVolumeMedium);
+    else if (volume > 0)
+        ui->volumeBtn->setIcon(*audioVolumeLow);
+    else
+        ui->volumeBtn->setIcon(*audioVolumeMuted);
+}
+

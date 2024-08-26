@@ -7,6 +7,8 @@
         <file>Resource/img/Weather/w4.png</file>
         <file>Resource/img/Map/enlarge.png</file>
         <file>Resource/img/Map/reduce.png</file>
+        <file>Resource/img/Music/icon-list.png</file>
+        <file>Resource/img/Music/icon-musical.png</file>
     </qresource>
     <qresource prefix="/qss/prefix2">
         <file>Resource/qss/myQss.qss</file>

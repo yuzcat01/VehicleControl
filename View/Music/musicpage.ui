@@ -44,9 +44,6 @@
         <height>60</height>
        </size>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color : rgb(255, 255, 255)</string>
-      </property>
       <property name="text">
        <string/>
       </property>
@@ -81,9 +78,6 @@
         <width>60</width>
         <height>60</height>
        </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color : rgb(255, 255, 255)</string>
       </property>
       <property name="text">
        <string/>
@@ -120,9 +114,6 @@
         <height>60</height>
        </size>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color : rgb(255, 255, 255)</string>
-      </property>
       <property name="text">
        <string/>
       </property>
@@ -149,6 +140,35 @@
        </size>
       </property>
      </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="volumeBtn">
+      <property name="minimumSize">
+       <size>
+        <width>60</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset theme="QIcon::ThemeIcon::AudioVolumeHigh"/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="volumeSlider">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -188,9 +208,6 @@
       <property name="layoutDirection">
        <enum>Qt::LayoutDirection::LeftToRight</enum>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color : rgb(255, 255, 255)</string>
-      </property>
       <property name="text">
        <string/>
       </property>
@@ -226,14 +243,8 @@
         <height>60</height>
        </size>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color : rgb(255, 255, 255)</string>
-      </property>
       <property name="text">
        <string/>
-      </property>
-      <property name="icon">
-       <iconset theme="QIcon::ThemeIcon::FormatTextDirectionLtr"/>
       </property>
       <property name="iconSize">
        <size>
@@ -264,14 +275,8 @@
         <height>60</height>
        </size>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color : rgb(255, 255, 255)</string>
-      </property>
       <property name="text">
        <string/>
-      </property>
-      <property name="icon">
-       <iconset theme="format-justify-fill"/>
       </property>
       <property name="iconSize">
        <size>
@@ -316,9 +321,6 @@
             <height>30</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">color : rgb(255, 255, 255)</string>
-          </property>
           <property name="text">
            <string>添加</string>
           </property>
@@ -335,9 +337,6 @@
             <width>0</width>
             <height>30</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color : rgb(255, 255, 255)</string>
           </property>
           <property name="text">
            <string>移除</string>
@@ -356,9 +355,6 @@
             <height>30</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">color : rgb(255, 255, 255)</string>
-          </property>
           <property name="text">
            <string>清空</string>
           </property>
@@ -372,9 +368,6 @@
       </item>
       <item>
        <widget class="QListWidget" name="musicList">
-        <property name="styleSheet">
-         <string notr="true">color : rgb(255, 255, 255)</string>
-        </property>
         <property name="editTriggers">
          <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
         </property>
