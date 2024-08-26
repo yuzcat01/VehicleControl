@@ -45,6 +45,8 @@ private slots:
 
     void on_playModeBtn_clicked();
 
+    void on_musicList_itemPressed(QListWidgetItem *item);
+
 private:
 
     void init();
@@ -68,7 +70,7 @@ private:
     QPoint lastMousePosition;
 
     int playModeFlag;
-    int isNextOrPrevious;
+    int isAutoless;
 };
 
 #endif // MUSICPAGE_H

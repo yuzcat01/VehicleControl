@@ -400,6 +400,9 @@
       </item>
       <item>
        <widget class="QListWidget" name="musicList">
+        <property name="styleSheet">
+         <string notr="true">font-size : 20px</string>
+        </property>
         <property name="editTriggers">
          <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
         </property>

@@ -13,7 +13,7 @@ MusicPage::MusicPage(QWidget *parent)
     , audioVolumeLow(new QIcon(QIcon::fromTheme("audio-volume-low")))
     , audioVolumeMuted(new QIcon(QIcon::fromTheme("audio-volume-muted")))
     , playModeFlag(0)
-    , isNextOrPrevious(false)
+    , isAutoless(false)
 {
     ui->setupUi(this);
     player->setAudioOutput(new QAudioOutput(this));
@@ -64,6 +64,7 @@ void MusicPage::init()
 
 void MusicPage::setPlaySource(QListWidgetItem *item)
 {
+    ui->playBtn->setIcon(*mediaPlaybackPause);
     player->setSource(item->data(Qt::UserRole).value<QUrl>());
     QString name = item->text().split(".")[0];
     QString coverPath = QCoreApplication::applicationDirPath() + "/../../Resource/img/Music/covers/" + name;
@@ -110,7 +111,6 @@ void MusicPage::on_playBtn_clicked()
             return;
         if(ui->musicList->currentRow() < 0)
             ui->musicList->setCurrentRow(0);
-        ui->playBtn->setIcon(*mediaPlaybackPause);
         if(player->playbackState() == QMediaPlayer::PausedState)
         {
             player->play();
@@ -123,7 +123,7 @@ void MusicPage::on_playBtn_clicked()
 
 void MusicPage::on_previousBtn_clicked()
 {
-    isNextOrPrevious = true;
+    isAutoless = true;
     int curRow = ui->musicList->currentRow();
     --curRow;
     curRow = curRow < 0 ? ui->musicList->count() -1 : curRow;
@@ -137,7 +137,7 @@ void MusicPage::on_previousBtn_clicked()
 
 void MusicPage::on_nextBtn_clicked()
 {
-    isNextOrPrevious = true;
+    isAutoless = true;
     int curRow = ui->musicList->currentRow();
     ++curRow;
     curRow = curRow > ui->musicList->count() -1 ? 0 : curRow;
@@ -186,10 +186,11 @@ void MusicPage::on_removeBtn_clicked()
     {
         setPlaySource(ui->musicList->currentItem());
         player->play();
-        ui->playBtn->setIcon(*mediaPlaybackPause);
     }
     else
     {
+        ui->musicCover_1->clear();
+        ui->musicCover_2->clear();
         player->stop();
         ui->playBtn->setIcon(*mediaPlaybackStart);
     }
@@ -199,6 +200,8 @@ void MusicPage::on_clearBtn_clicked()
 {
     ui->musicList->clear();
     player->stop();
+    ui->musicCover_1->clear();
+    ui->musicCover_2->clear();
     ui->playBtn->setIcon(*mediaPlaybackStart);
 }
 
@@ -301,9 +304,9 @@ void MusicPage::on_playModeBtn_clicked()
 
 void MusicPage::do_playbackStateChanged(QMediaPlayer::PlaybackState newState)
 {
-    if(isNextOrPrevious)
+    if(isAutoless)
     {
-        isNextOrPrevious = false;
+        isAutoless = false;
         return;
     }
     if((newState == QMediaPlayer::StoppedState) && (ui->musicList->count() > 0))
@@ -331,4 +334,11 @@ void MusicPage::do_playbackStateChanged(QMediaPlayer::PlaybackState newState)
             player->play();
         }
     }
+}
+
+void MusicPage::on_musicList_itemPressed(QListWidgetItem *item)
+{
+    isAutoless = true;
+    setPlaySource(item);
+    player->play();
 }
