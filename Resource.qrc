@@ -7,9 +7,64 @@
         <file>Resource/img/Weather/w4.png</file>
         <file>Resource/img/Map/enlarge.png</file>
         <file>Resource/img/Map/reduce.png</file>
+        <file>Resource/img/Weather/res/back.png</file>
+        <file>Resource/img/Weather/res/background.png</file>
+        <file>Resource/img/Weather/res/bg.jpg</file>
+        <file>Resource/img/Weather/res/bg2.jpg</file>
+        <file>Resource/img/Weather/res/close.png</file>
+        <file>Resource/img/Weather/res/humidity.png</file>
+        <file>Resource/img/Weather/res/list.png</file>
+        <file>Resource/img/Weather/res/lowHumidty.png</file>
+        <file>Resource/img/Weather/res/pm25.png</file>
+        <file>Resource/img/Weather/res/search.png</file>
+        <file>Resource/img/Weather/res/sunrise.png</file>
+        <file>Resource/img/Weather/res/WeaFor.png</file>
+        <file>Resource/img/Weather/res/wind.png</file>
+        <file>Resource/img/Weather/res/world2.png</file>
+        <file>Resource/img/Weather/res/aqi.png</file>
+        <file>Resource/img/Weather/res/type/BaoXue.png</file>
+        <file>Resource/img/Weather/res/type/BaoYu.png</file>
+        <file>Resource/img/Weather/res/type/BaoYuDaoDaBaoYu.png</file>
+        <file>Resource/img/Weather/res/type/DaBaoYu.png</file>
+        <file>Resource/img/Weather/res/type/DaBaoYuDaoTeDaBaoYu.png</file>
+        <file>Resource/img/Weather/res/type/DaDaoBaoXue.png</file>
+        <file>Resource/img/Weather/res/type/DaDaoBaoYu.png</file>
+        <file>Resource/img/Weather/res/type/DaXue.png</file>
+        <file>Resource/img/Weather/res/type/DaYu.png</file>
+        <file>Resource/img/Weather/res/type/DongYu.png</file>
+        <file>Resource/img/Weather/res/type/DuoYun.png</file>
+        <file>Resource/img/Weather/res/type/FuChen.png</file>
+        <file>Resource/img/Weather/res/type/LeiZhenYu.png</file>
+        <file>Resource/img/Weather/res/type/LeiZhenYuBanYouBingBao.png</file>
+        <file>Resource/img/Weather/res/type/Mai.png</file>
+        <file>Resource/img/Weather/res/type/QiangShaChenBao.png</file>
+        <file>Resource/img/Weather/res/type/Qing.png</file>
+        <file>Resource/img/Weather/res/type/ShaChenBao.png</file>
+        <file>Resource/img/Weather/res/type/TeDaBaoYu.png</file>
+        <file>Resource/img/Weather/res/type/undefined.png</file>
+        <file>Resource/img/Weather/res/type/Wu.png</file>
+        <file>Resource/img/Weather/res/type/XiaoDaoZhongXue.png</file>
+        <file>Resource/img/Weather/res/type/XiaoDaoZhongYu.png</file>
+        <file>Resource/img/Weather/res/type/XiaoXue.png</file>
+        <file>Resource/img/Weather/res/type/XiaoYu.png</file>
+        <file>Resource/img/Weather/res/type/Xue.png</file>
+        <file>Resource/img/Weather/res/type/YangSha.png</file>
+        <file>Resource/img/Weather/res/type/Yin.png</file>
+        <file>Resource/img/Weather/res/type/Yu.png</file>
+        <file>Resource/img/Weather/res/type/YuJiaXue.png</file>
+        <file>Resource/img/Weather/res/type/ZhenXue.png</file>
+        <file>Resource/img/Weather/res/type/ZhenYu.png</file>
+        <file>Resource/img/Weather/res/type/ZhongDaoDaXue.png</file>
+        <file>Resource/img/Weather/res/type/ZhongDaoDaYu.png</file>
+        <file>Resource/img/Weather/res/type/ZhongXue.png</file>
+        <file>Resource/img/Weather/res/type/ZhongYu.png</file>
+        <file>Resource/img/Weather/res/type/neige.txt</file>
     </qresource>
     <qresource prefix="/qss/prefix2">
         <file>Resource/qss/myQss.qss</file>
         <file>View/Map/map.osm</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>Resource/citycode-2019-08-23.json</file>
     </qresource>
 </RCC>
