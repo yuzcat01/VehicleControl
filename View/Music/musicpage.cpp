@@ -184,6 +184,7 @@ void MusicPage::on_removeBtn_clicked()
     delete ui->musicList->takeItem(index);
     if(ui->musicList->currentRow() >= 0)
     {
+        isAutoless = true;
         setPlaySource(ui->musicList->currentItem());
         player->play();
     }
