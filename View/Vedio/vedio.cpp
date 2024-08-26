@@ -1,276 +1,133 @@
 #include "vedio.h"
-#include "ui_vedio.h"
-#include <QDebug>
-
-std::atomic_bool videoStatus = false;
-std::atomic_bool processBarIsSliding = false;
-std::atomic_int volume = 50;
-int startAndStopClickCount = 0;
+#include "./ui_vedio.h"
 
 Vedio::Vedio(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Vedio)
 {
     ui->setupUi(this);
-    setWindowTitle("播放器");
     player = new QMediaPlayer;
-    //控件初始化
-    ui->startAndPauseBtn_2->setEnabled(false);
-    //点击焦点设置
-    ui->fullScrBtn_2->setFocusPolicy(Qt::NoFocus);
-    ui->startAndPauseBtn_2->setFocusPolicy(Qt::NoFocus);
-    ui->openBtn_2->setFocusPolicy(Qt::NoFocus);
-    //音频播放设置
-    audioOut = new QAudioOutput(this);
-    audioOut->setVolume(volume);
-    ui->volumeBar_2->setValue(volume);
-    ui->volumePercentText_2->setText(QString("%1%").arg(volume));
-    //音量条拖动处理
-    connect(ui->volumeBar_2, &QSlider::sliderMoved, player, [&]()
-            {
-                //BUG↓
-                if(ui->volumeBar_2->value() == 1)
-                    ui->volumeBar_2->setValue(0);
+    //player->setSource(QUrl("qrc:/new/prefix1/SnapAny.mp4"));
+    audioOutput = new QAudioOutput;
 
-                volume = ui->volumeBar_2->value();
-                audioOut->setVolume((float)volume / 100.0f);
-                ui->volumePercentText_2->setText(QString("%1%").arg(volume));
-            });
-    //打开按钮
-    connect(ui->openBtn_2, &QPushButton::clicked, this, [=](){
-        //选择文件并存储路径
-        videoStatus = false;
-        selectVideo = QFileDialog::getOpenFileName(this, "选择一个视频", "C:\\", "视频 (*.mp4;*.flv;*.hevc;*.mov;*.avi)");
-        //若路径不为空才执行播放操作
-        if(!selectVideo.isEmpty())
-        {
-            ProcessBarThread *procBarThd = new ProcessBarThread;  //进度条子线程
-            if(!procBarThd->isFinished())
-            {
-                procBarThd->terminate();
-            }
-            videoStatus = true;
-            //播放器播放
-            //键盘监听事件
-            ui->videoWidget->installEventFilter(this); //为videoWidget安装事件过滤器
-            this->installEventFilter(this);
-            //全屏按钮
-            connect(ui->fullScrBtn_2, &QPushButton::clicked, [=]()
-                    {
-                        ui->videoWidget->setFullScreen(true);
-                    });
-            //初始化播放器
-            init_player();
-            //设置播放器
-            player->setSource(QUrl::fromLocalFile(selectVideo));
-            player->setVideoOutput(ui->videoWidget);
-            player->setLoops(true);
-            player->setAudioOutput(audioOut);
-            //开始播放
-            player->play();
 
-            //此处复杂了，可不用多线程
-            //procBarThd->start(); //线程启动
-            //connect(procBarThd, &ProcessBarThread::current_play_duration, this, [=]()
-            //        {
-            //            //在循环体中
-            //            ui->timeText_2->setText(get_process_text(format_time(player->duration()), format_time(player->position())));
-            //            if(!processBarIsSliding)
-            //            {
-            //                ui->processBar->setValue(get_process_percent(player->position(), player->duration()));
-            //            }
-            //        });
-            //进度条拖动处理
-            connect(ui->processBar, &QSlider::sliderMoved, player, [&]()
-                    {
-                        processBarIsSliding = true;
-                        setPlayerStatus(false);
-                        player->setPosition(int(((double)ui->processBar->value() / 100.00) * (double)player->duration()));
-                        connect(ui->processBar, &QSlider::sliderReleased, player, [&]()
-                                {
-                                    processBarIsSliding = false;
-                                    setPlayerStatus(true);
-                                });
-                    });
-            //视频播放速度选择框处理
-            connect(ui->speedComboBox_2, &QComboBox::currentIndexChanged, [=](int index)
-                    {
-                        if(index == 0)
-                            player->setPlaybackRate(1);
-                        else if(index == 1)
-                            player->setPlaybackRate(1.25);
-                        else if(index == 2)
-                            player->setPlaybackRate(1.5);
-                        else if(index == 3)
-                            player->setPlaybackRate(2);
-                        else if(index == 4)
-                            player->setPlaybackRate(3);
-                        else
-                            player->setPlaybackRate(4);
-                    });
-        }
-        else //如果地址为空，则提示
-        {
-            if(!player->hasVideo())
-            {
-                ui->startAndPauseBtn_2->setEnabled(false);
-            }
+    player->setVideoOutput(ui->videoWidget);
 
-            videoStatus = false;
+    // QWidget *centralWidget = new QWidget(this); // 'this' is your QMainWindow or QDialog
+    //QVBoxLayout *layout = new QVBoxLayout(centralWidget);
+    // layout->addWidget(videoWidget);
 
-            msg = new QMessageBox;
-            msg->information(this, "提示", "未选择任何文件", QMessageBox::StandardButton::Ok);
-            delete msg;
-        }
-    });
+    // Set the central widget if using QMainWindow
+    // setCentralWidget(centralWidget);
+    player->setAudioOutput(audioOutput);
+    audioOutput->setVolume(1.0);
 
-    //开始&暂停按钮事件
-    connect(ui->startAndPauseBtn_2, &QPushButton::clicked, player, [=]()
-            {
-                if(startAndStopClickCount % 2 == 0)
-                {
-                    setPlayerStatus(true);
-                }
-                else
-                {
-                    setPlayerStatus(false);
-                }
-            });
+    ui->vSlider->installEventFilter(this);
+
+    ui->volumeSlider->setSliderPosition(100);
+
+    ui->speedComboBox->addItem("0.5x", QVariant(0.5));
+    ui->speedComboBox->addItem("1x", QVariant(1.0));  // Default speed
+    ui->speedComboBox->addItem("1.5x", QVariant(1.5));
+    ui->speedComboBox->addItem("2x", QVariant(2.0));
+    ui->speedComboBox->setCurrentIndex(1);  // Set default to 1x speed
+
+
+    connect(player, &QMediaPlayer::positionChanged, this, &Vedio::on_positionChanged);
+    connect(player, &QMediaPlayer::durationChanged, this, &Vedio::on_durationChanged);
+    connect(ui->vSlider, &QSlider::sliderMoved, this, &Vedio::on_sliderMoved);
+    // Connect the slider to control the volume
+    connect(ui->volumeSlider, &QSlider::valueChanged, this, &Vedio::on_volumeSlider_valueChanged);
+    connect(ui->PlayPauseButton, &QPushButton::clicked, this, &Vedio::on_togglePlayPauseButton_clicked);
+    connect(ui->speedComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &Vedio::on_speedComboBox_currentIndexChanged);
+
+
 }
 
 Vedio::~Vedio()
 {
-    delete player;
-    delete audioOut;
     delete ui;
 }
 
-QString Vedio::format_time(int ms)
+void Vedio::on_pushButton_clicked()
 {
-    int ss = 1000;
-    int mi = ss * 60;
-    int hh = mi * 60;
-    int dd = hh * 24;
-
-    long day = ms / dd;
-    long hour = (ms - day * dd) / hh;
-    long minute = (ms - day * dd - hour * hh) / mi;
-    long second = (ms - day * dd - hour * hh - minute * mi) / ss;
-    long milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
-
-    QString h = QString::number(hour,10);
-    QString m = QString::number(minute,10);
-    QString s = QString::number(second,10);
-    QString msec = QString::number(milliSecond,10);
-
-    //qDebug() << "minute:" << min << "second" << sec << "ms" << msec <<endl;
-
-    return h + ":" + m + ":" + s ;
-}
-
-QString Vedio::get_process_text(QString inTotalDuration, QString inCurrent)
-{
-     return QString("%1 / %2").arg(inCurrent).arg(inTotalDuration);
-}
-
-int Vedio::get_process_percent(qint64 inValue, qint64 inTotal)
-{
-    int result = 0;
-    result = int((double(inValue) / (double)inTotal) * 100.00);
-    return result;
-}
-
-void Vedio::setPlayerStatus(bool playStatus)
-{
-    if(playStatus)
-    {
-        player->play();
-        ui->startAndPauseBtn_2->setText("暂停");
-        startAndStopClickCount++;
+    fileName = QFileDialog::getOpenFileName(this, tr("Open Video"), "C:\\", tr("Video Files (*.mp4 *.avi *.mkv)"));
+    if (!fileName.isEmpty()) {
+        player->setSource(QUrl::fromLocalFile(fileName));
+    } else {
+        // Handle the case where no file was selected
+        qWarning("No video file selected!");
     }
-    else
-    {
+
+    player->setVideoOutput(ui->videoWidget);
+    player->setAudioOutput(audioOutput);
+    audioOutput->setVolume(1.0);
+
+    player->play();
+}
+
+
+
+void Vedio::on_positionChanged(qint64 position)
+{
+    if (!ui->vSlider->isSliderDown()) {
+        ui->vSlider->setValue(static_cast<int>(position));
+    }
+    int secs = position / 1000;
+    int mins = secs / 60;
+    secs %= 60;
+    QString currentTime = QString::asprintf("%d:%02d", mins, secs);
+    ui->nowTime->setText(currentTime);
+}
+
+void Vedio::on_sliderMoved(int position)
+{
+    player->setPosition(static_cast<qint64>(position));
+}
+
+void Vedio::on_durationChanged(qint64 duration)
+{
+    ui->vSlider->setRange(0, static_cast<int>(duration));
+    int secs = duration / 1000;
+    int mins = secs / 60;
+    secs %= 60;
+    QString totalTime = QString::asprintf("%d:%02d", mins, secs);
+    ui->allTime->setText(totalTime);
+
+}
+
+void Vedio::on_volumeSlider_valueChanged(int value)
+{
+    // Convert the slider value (0-100) to a volume percentage (0.0 to 1.0)
+    qreal volume = static_cast<qreal>(value) / 100.0;
+    audioOutput->setVolume(volume);
+
+    // Update the QLabel to show the volume percentage
+    ui->volumeLabel->setText(QString::asprintf("%d%%", value));
+}
+
+void Vedio::on_togglePlayPauseButton_clicked()
+{
+    if (player->playbackState() == QMediaPlayer::PlayingState) {
         player->pause();
-        ui->startAndPauseBtn_2->setText("播放");
-        startAndStopClickCount++;
+        ui->PlayPauseButton->setText("Play");
+    } else {
+        player->play();
+        ui->PlayPauseButton->setText("Pause");
     }
 }
 
-void Vedio::init_player()
+void Vedio::on_speedComboBox_currentIndexChanged(int index)
 {
-    //暂停和播放按钮状态
-    ui->startAndPauseBtn_2->setEnabled(true);
-    ui->startAndPauseBtn_2->setText("暂停");
-    ui->timeText_2->setText(get_process_text(format_time(player->duration()), "0:0:0"));
-    //进度条设置
-    ui->processBar->setMinimum(0);
-    ui->processBar->setMaximum(100);
-    ui->processBar->setValue(0);
-    //音量条
-    ui->volumeBar_2->setMinimum(0);
-    ui->volumeBar_2->setMaximum(100);
-    ui->volumeBar_2->setValue(volume);
-
+    qreal speed = ui->speedComboBox->currentData().toReal();
+    player->setPlaybackRate(speed);
 }
+
+
 
 void Vedio::on_toHome_clicked()
 {
      emit toHome();
 }
 
-bool Vedio::eventFilter(QObject *obj, QEvent *e)
-{
-    if(e->type() == QEvent::KeyRelease)
-    {
-        //全屏状态
-        if(obj == ui->videoWidget)
-        {
-            QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
-            //禁止重复按键
-            if(!keyEvent->isAutoRepeat())
-            {
-                //全屏退出
-                if(keyEvent->key() == Qt::Key_Escape || keyEvent->key() == Qt::Key_F12)
-                {
-                    ui->videoWidget->setFullScreen(false);
-                }
-                //暂停与播放
-                if(keyEvent->key() == Qt::Key_Space)
-                {
-                    startAndStopClickCount % 2 == 0 ? setPlayerStatus(true) : setPlayerStatus(false);
-                }
-            }
-        }
-        //窗口状态
-        if(obj == this)
-        {
-            QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
-            //禁止重复按键
-            if(!keyEvent->isAutoRepeat())
-            {
-                //打开全屏
-                if(keyEvent->key() == Qt::Key_F11)
-                {
-                    ui->videoWidget->setFullScreen(true);
-                }
-
-                //暂停与播放
-                if(keyEvent->key() == Qt::Key_Space)
-                {
-                    startAndStopClickCount % 2 == 0 ? setPlayerStatus(true) : setPlayerStatus(false);
-                }
-            }
-        }
-    }
-    return Vedio::eventFilter(obj,e);
-}
-
-
-void ProcessBarThread::run()
-{
-    while(videoStatus)
-    {
-        emit current_play_duration();
-        QThread::usleep(10);
-    }
-}
