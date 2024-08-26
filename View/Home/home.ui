@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>779</width>
-    <height>575</height>
+    <width>1024</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>661</width>
-     <height>441</height>
+     <width>1024</width>
+     <height>576</height>
     </rect>
    </property>
    <widget class="QLabel" name="label">
@@ -27,19 +27,19 @@
      <rect>
       <x>40</x>
       <y>30</y>
-      <width>141</width>
+      <width>241</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; font-style:italic; text-decoration: underline;&quot;&gt;这里是主页&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; font-style:italic; text-decoration: underline;&quot;&gt;欢迎使用本系统&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>190</y>
+      <x>180</x>
+      <y>120</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -51,8 +51,8 @@
    <widget class="QPushButton" name="toMusicPage">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>190</y>
+      <x>40</x>
+      <y>250</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -64,8 +64,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>190</y>
+      <x>130</x>
+      <y>380</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -77,8 +77,8 @@
    <widget class="QPushButton" name="toCommu">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>280</y>
+      <x>670</x>
+      <y>120</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -90,8 +90,8 @@
    <widget class="QPushButton" name="toVedio">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>280</y>
+      <x>770</x>
+      <y>250</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -103,8 +103,8 @@
    <widget class="QPushButton" name="toPic">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>280</y>
+      <x>700</x>
+      <y>400</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -116,8 +116,8 @@
    <widget class="QPushButton" name="toBrow">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>370</y>
+      <x>400</x>
+      <y>460</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -129,8 +129,8 @@
    <widget class="QLabel" name="timeLabel">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>100</y>
+      <x>430</x>
+      <y>260</y>
       <width>131</width>
       <height>41</height>
      </rect>
