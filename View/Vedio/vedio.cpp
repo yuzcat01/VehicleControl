@@ -12,7 +12,6 @@ Vedio::Vedio(QWidget *parent)
     , ui(new Ui::Vedio)
 {
     ui->setupUi(this);
-    setWindowTitle("播放器");
     player = new QMediaPlayer;
     //控件初始化
     ui->startAndPauseBtn_2->setEnabled(false);
@@ -27,15 +26,15 @@ Vedio::Vedio(QWidget *parent)
     ui->volumePercentText_2->setText(QString("%1%").arg(volume));
     //音量条拖动处理
     connect(ui->volumeBar_2, &QSlider::sliderMoved, player, [&]()
-            {
-                //BUG↓
-                if(ui->volumeBar_2->value() == 1)
-                    ui->volumeBar_2->setValue(0);
+    {
+        //BUG↓
+        if(ui->volumeBar_2->value() == 1)
+            ui->volumeBar_2->setValue(0);
 
-                volume = ui->volumeBar_2->value();
-                audioOut->setVolume((float)volume / 100.0f);
-                ui->volumePercentText_2->setText(QString("%1%").arg(volume));
-            });
+        volume = ui->volumeBar_2->value();
+        audioOut->setVolume((float)volume / 100.0f);
+        ui->volumePercentText_2->setText(QString("%1%").arg(volume));
+    });
     //打开按钮
     connect(ui->openBtn_2, &QPushButton::clicked, this, [=](){
         //选择文件并存储路径
@@ -56,9 +55,9 @@ Vedio::Vedio(QWidget *parent)
             this->installEventFilter(this);
             //全屏按钮
             connect(ui->fullScrBtn_2, &QPushButton::clicked, [=]()
-                    {
-                        ui->videoWidget->setFullScreen(true);
-                    });
+            {
+                ui->videoWidget->setFullScreen(true);
+            });
             //初始化播放器
             init_player();
             //设置播放器
@@ -69,45 +68,34 @@ Vedio::Vedio(QWidget *parent)
             //开始播放
             player->play();
 
-            //此处复杂了，可不用多线程
-            //procBarThd->start(); //线程启动
-            //connect(procBarThd, &ProcessBarThread::current_play_duration, this, [=]()
-            //        {
-            //            //在循环体中
-            //            ui->timeText_2->setText(get_process_text(format_time(player->duration()), format_time(player->position())));
-            //            if(!processBarIsSliding)
-            //            {
-            //                ui->processBar->setValue(get_process_percent(player->position(), player->duration()));
-            //            }
-            //        });
             //进度条拖动处理
             connect(ui->processBar, &QSlider::sliderMoved, player, [&]()
-                    {
-                        processBarIsSliding = true;
-                        setPlayerStatus(false);
-                        player->setPosition(int(((double)ui->processBar->value() / 100.00) * (double)player->duration()));
-                        connect(ui->processBar, &QSlider::sliderReleased, player, [&]()
-                                {
-                                    processBarIsSliding = false;
-                                    setPlayerStatus(true);
-                                });
-                    });
+            {
+                processBarIsSliding = true;
+                setPlayerStatus(false);
+                player->setPosition(int(((double)ui->processBar->value() / 100.00) * (double)player->duration()));
+                connect(ui->processBar, &QSlider::sliderReleased, player, [&]()
+                {
+                    processBarIsSliding = false;
+                    setPlayerStatus(true);
+                });
+            });
             //视频播放速度选择框处理
             connect(ui->speedComboBox_2, &QComboBox::currentIndexChanged, [=](int index)
-                    {
-                        if(index == 0)
-                            player->setPlaybackRate(1);
-                        else if(index == 1)
-                            player->setPlaybackRate(1.25);
-                        else if(index == 2)
-                            player->setPlaybackRate(1.5);
-                        else if(index == 3)
-                            player->setPlaybackRate(2);
-                        else if(index == 4)
-                            player->setPlaybackRate(3);
-                        else
-                            player->setPlaybackRate(4);
-                    });
+            {
+                if(index == 0)
+                    player->setPlaybackRate(1);
+                else if(index == 1)
+                    player->setPlaybackRate(1.25);
+                else if(index == 2)
+                    player->setPlaybackRate(1.5);
+                else if(index == 3)
+                    player->setPlaybackRate(2);
+                else if(index == 4)
+                    player->setPlaybackRate(3);
+                else
+                    player->setPlaybackRate(4);
+            });
         }
         else //如果地址为空，则提示
         {
@@ -126,16 +114,16 @@ Vedio::Vedio(QWidget *parent)
 
     //开始&暂停按钮事件
     connect(ui->startAndPauseBtn_2, &QPushButton::clicked, player, [=]()
-            {
-                if(startAndStopClickCount % 2 == 0)
-                {
-                    setPlayerStatus(true);
-                }
-                else
-                {
-                    setPlayerStatus(false);
-                }
-            });
+    {
+        if(startAndStopClickCount % 2 == 0)
+        {
+            setPlayerStatus(true);
+        }
+        else
+        {
+            setPlayerStatus(false);
+        }
+    });
 }
 
 Vedio::~Vedio()

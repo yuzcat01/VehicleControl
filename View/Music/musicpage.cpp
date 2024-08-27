@@ -113,6 +113,7 @@ void MusicPage::on_playBtn_clicked()
             ui->musicList->setCurrentRow(0);
         if(player->playbackState() == QMediaPlayer::PausedState)
         {
+            ui->playBtn->setIcon(*mediaPlaybackPause);
             player->play();
             return;
         }
