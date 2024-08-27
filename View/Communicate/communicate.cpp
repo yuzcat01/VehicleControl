@@ -7,6 +7,13 @@ Communicate::Communicate(QWidget *parent)
     , ui(new Ui::Communicate)
 {
     ui->setupUi(this);
+
+    // 连接WebSocket服务器
+    connect(webSocket, &QWebSocket::connected, this, &Communicate::onConnected);
+    connect(webSocket, &QWebSocket::disconnected, this, &Communicate::onDisconnected);
+    connect(webSocket, &QWebSocket::textMessageReceived, this, &Communicate::onTextMessageReceived);
+
+    webSocket->open(QUrl("ws://localhost:8080/chat/1"));
 }
 
 Communicate::~Communicate()
@@ -35,6 +42,8 @@ void Communicate::on_sendButton_clicked()
         QTimer::singleShot(1000, [this](){
             appendMessage("This is a reply.", "Chatbot");
         });
+        // 发送消息到WebSocket服务器
+        webSocket->sendTextMessage(message);
     }
 }
 
@@ -42,4 +51,19 @@ void Communicate::appendMessage(const QString &message, const QString &sender)
 {
     QString formattedMessage = QString("<b>%1:</b> %2").arg(sender, message);
     ui->chatDisplay->append(formattedMessage);
+}
+
+void Communicate::onConnected()
+{
+    appendMessage("Connected to the server.", "System");
+}
+
+void Communicate::onTextMessageReceived(QString message)
+{
+    appendMessage(message, "Server");
+}
+
+void Communicate::onDisconnected()
+{
+    appendMessage("Disconnected from the server.", "System");
 }
