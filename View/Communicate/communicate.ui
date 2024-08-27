@@ -26,7 +26,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>10</y>
       <width>141</width>
       <height>51</height>
      </rect>
@@ -38,8 +38,8 @@
    <widget class="QPushButton" name="toHome">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>70</y>
+      <x>140</x>
+      <y>10</y>
       <width>61</width>
       <height>51</height>
      </rect>
@@ -48,43 +48,145 @@
      <string>回主页</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="sendButton">
+   <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>450</y>
-      <width>81</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>发送</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="messageInput">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>450</y>
-      <width>561</width>
-      <height>71</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="chatDisplay">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
+      <x>50</x>
       <y>70</y>
-      <width>751</width>
-      <height>351</height>
+      <width>901</width>
+      <height>481</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgb(255, 247, 216);
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>80</y>
+        <width>69</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>用户名</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="passwordInput">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>160</y>
+        <width>241</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="usernameInput">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>70</y>
+        <width>231</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>160</y>
+        <width>69</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>密码</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="registerButton">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>247</y>
+        <width>111</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>注册</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="loginButton">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>250</y>
+        <width>111</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>登录</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QTextEdit" name="chatDisplay">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>10</y>
+        <width>751</width>
+        <height>351</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:rgb(255, 247, 216);
 font-size:18px
 </string>
-    </property>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="messageInput">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>380</y>
+        <width>561</width>
+        <height>71</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="sendButton">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>380</y>
+        <width>81</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>发送</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="logoutButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>150</y>
+        <width>92</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>登出</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
