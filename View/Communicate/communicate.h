@@ -41,7 +41,6 @@ private:
     QNetworkAccessManager *networkManager;
     QString token;
 
-    bool showLoginRegisterDialog();  // Function to show login/register dialog
     void connectWebSocket();         // Function to connect WebSocket
     void logout();                   // Function to logout
     void appendMessage(const QString &message, const QString &sender);

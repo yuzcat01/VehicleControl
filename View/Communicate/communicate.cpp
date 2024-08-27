@@ -18,8 +18,6 @@ Communicate::Communicate(QWidget *parent)
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
-    // 连接WebSocket服务器
-
 }
 
 Communicate::~Communicate()
@@ -36,7 +34,7 @@ void Communicate::on_toHome_clicked()
 
 QString Communicate::getUsername() const
 {
-    return ui->passwordInput->text();
+    return ui->usernameInput->text();
 }
 
 QString Communicate::getPassword() const
@@ -44,9 +42,51 @@ QString Communicate::getPassword() const
     return ui->passwordInput->text();
 }
 
-bool Communicate::showLoginRegisterDialog()
+void Communicate::connectWebSocket()
 {
+    ui->stackedWidget->setCurrentIndex(1);
+    disconnect(webSocket, &QWebSocket::textMessageReceived, this, &Communicate::onTextMessageReceived);
+    connect(webSocket, &QWebSocket::textMessageReceived, this, &Communicate::onTextMessageReceived);
 
+    webSocket->open(QUrl("ws://localhost:8080/chat/" + token));
+}
+
+void Communicate::logout()
+{
+    webSocket->close();  // Close WebSocket connection
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void Communicate::on_sendButton_clicked()
+{
+    // 获取输入框中的消息
+    QString message = ui->messageInput->text();
+    if(!message.isEmpty()) {
+        // 显示消息
+        appendMessage(message, "Me");
+        // 清空输入框
+        ui->messageInput->clear();
+        webSocket->sendTextMessage(message);
+    }
+}
+
+void Communicate::appendMessage(const QString &message, const QString &sender)
+{
+    QString formattedMessage = QString("<b>%1:</b> %2").arg(sender, message);
+    ui->chatDisplay->append(formattedMessage);
+}
+
+void Communicate::onTextMessageReceived(QString message)
+{
+    QList<QString> messageSplits = message.split("：");
+    message = messageSplits[1];
+    for(int i = 2; i < messageSplits.size(); ++i)
+        message += "：" + messageSplits[i];
+    appendMessage(message, messageSplits[0]);
+}
+
+void Communicate::on_loginButton_clicked()
+{
     QString username = getUsername();
     QString password = getPassword();
 
@@ -64,68 +104,19 @@ bool Communicate::showLoginRegisterDialog()
 
     if (loginReply->error() != QNetworkReply::NoError) {
         QMessageBox::critical(this, "Error", "Login failed!");
-        return false;
+        return;
     }
 
     QJsonObject loginResponse = QJsonDocument::fromJson(loginReply->readAll()).object();
     int loginCode = loginResponse["code"].toInt();
     if (loginCode != 1) {
         QMessageBox::critical(this, "Error", loginResponse["message"].toString());
-        return false;
+        return;
     }
 
     token = loginResponse["data"].toString();
     connectWebSocket();  // Connect to WebSocket after successful login
-    return true;
-
-
-    return false;
-}
-
-void Communicate::connectWebSocket()
-{
-    ui->stackedWidget->setCurrentIndex(1);
-    connect(webSocket, &QWebSocket::textMessageReceived, this, &Communicate::onTextMessageReceived);
-
-    webSocket->open(QUrl("ws://localhost:8080/chat/" + token));
-}
-
-void Communicate::logout()
-{
-    webSocket->close();  // Close WebSocket connection
-    ui->stackedWidget->setCurrentIndex(0);
-}
-
-void Communicate::on_sendButton_clicked()
-{
-    // 获取输入框中的消息
-    QString message = ui->messageInput->text();
-
-    if(!message.isEmpty()) {
-        // 显示消息
-        appendMessage(message, "Me");
-
-        // 清空输入框
-        ui->messageInput->clear();
-
-        webSocket->sendTextMessage(message);
-    }
-}
-
-void Communicate::appendMessage(const QString &message, const QString &sender)
-{
-    QString formattedMessage = QString("<b>%1:</b> %2").arg(sender, message);
-    ui->chatDisplay->append(formattedMessage);
-}
-
-void Communicate::onTextMessageReceived(QString message)
-{
-    appendMessage(message, "Server");
-}
-
-void Communicate::on_loginButton_clicked()
-{
-    showLoginRegisterDialog();
+    return;
 }
 
 void Communicate::on_registerButton_clicked()
@@ -156,4 +147,3 @@ void Communicate::on_logoutButton_clicked()
 {
     logout();
 }
-
