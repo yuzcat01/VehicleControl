@@ -1,29 +1,99 @@
 #include "communicate.h"
 #include "ui_communicate.h"
+
 #include <QTimer>
+
+#include <QMessageBox>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QEventLoop>
 
 Communicate::Communicate(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Communicate)
+    , webSocket (new QWebSocket)
+    , networkManager(new QNetworkAccessManager(this))
 {
     ui->setupUi(this);
-
+    ui->stackedWidget->setCurrentIndex(0);
     // 连接WebSocket服务器
-    connect(webSocket, &QWebSocket::connected, this, &Communicate::onConnected);
-    connect(webSocket, &QWebSocket::disconnected, this, &Communicate::onDisconnected);
-    connect(webSocket, &QWebSocket::textMessageReceived, this, &Communicate::onTextMessageReceived);
 
-    webSocket->open(QUrl("ws://localhost:8080/chat/1"));
 }
 
 Communicate::~Communicate()
 {
     delete ui;
+    delete webSocket;
+    delete networkManager;
 }
 
 void Communicate::on_toHome_clicked()
 {
      emit toHome();
+}
+
+QString Communicate::getUsername() const
+{
+    return ui->passwordInput->text();
+}
+
+QString Communicate::getPassword() const
+{
+    return ui->passwordInput->text();
+}
+
+bool Communicate::showLoginRegisterDialog()
+{
+
+    QString username = getUsername();
+    QString password = getPassword();
+
+    QJsonObject loginData;
+    loginData["username"] = username;
+    loginData["password"] = password;
+
+    QNetworkRequest loginRequest(QUrl("http://localhost:8080/login"));
+    loginRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkReply* loginReply = networkManager->post(loginRequest, QJsonDocument(loginData).toJson());
+    QEventLoop eventLoop;
+    connect(loginReply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+    eventLoop.exec();
+
+    if (loginReply->error() != QNetworkReply::NoError) {
+        QMessageBox::critical(this, "Error", "Login failed!");
+        return false;
+    }
+
+    QJsonObject loginResponse = QJsonDocument::fromJson(loginReply->readAll()).object();
+    int loginCode = loginResponse["code"].toInt();
+    if (loginCode != 1) {
+        QMessageBox::critical(this, "Error", loginResponse["message"].toString());
+        return false;
+    }
+
+    token = loginResponse["data"].toString();
+    connectWebSocket();  // Connect to WebSocket after successful login
+    return true;
+
+
+    return false;
+}
+
+void Communicate::connectWebSocket()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+    connect(webSocket, &QWebSocket::textMessageReceived, this, &Communicate::onTextMessageReceived);
+
+    webSocket->open(QUrl("ws://localhost:8080/chat/" + token));
+}
+
+void Communicate::logout()
+{
+    webSocket->close();  // Close WebSocket connection
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void Communicate::on_sendButton_clicked()
@@ -38,11 +108,6 @@ void Communicate::on_sendButton_clicked()
         // 清空输入框
         ui->messageInput->clear();
 
-        // 模拟回复
-        QTimer::singleShot(1000, [this](){
-            appendMessage("This is a reply.", "Chatbot");
-        });
-        // 发送消息到WebSocket服务器
         webSocket->sendTextMessage(message);
     }
 }
@@ -53,17 +118,42 @@ void Communicate::appendMessage(const QString &message, const QString &sender)
     ui->chatDisplay->append(formattedMessage);
 }
 
-void Communicate::onConnected()
-{
-    appendMessage("Connected to the server.", "System");
-}
-
 void Communicate::onTextMessageReceived(QString message)
 {
     appendMessage(message, "Server");
 }
 
-void Communicate::onDisconnected()
+void Communicate::on_loginButton_clicked()
 {
-    appendMessage("Disconnected from the server.", "System");
+    showLoginRegisterDialog();
 }
+
+void Communicate::on_registerButton_clicked()
+{
+    QString username = getUsername();
+    QString password = getPassword();
+
+    QJsonObject registrationData;
+    registrationData["username"] = username;
+    registrationData["password"] = password;
+
+    QNetworkRequest registerRequest(QUrl("http://localhost:8080/register"));
+    registerRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkReply* registerReply = networkManager->post(registerRequest, QJsonDocument(registrationData).toJson());
+    QEventLoop eventLoop;
+    connect(registerReply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+    eventLoop.exec();
+
+    if (registerReply->error() != QNetworkReply::NoError) {
+        QMessageBox::critical(this, "Error", "Registration failed!");
+    } else {
+        QMessageBox::information(this, "Success", "Registration successful!");
+    }
+}
+
+void Communicate::on_logoutButton_clicked()
+{
+    logout();
+}
+
