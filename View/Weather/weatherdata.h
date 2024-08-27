@@ -6,21 +6,21 @@ class Today {
 public:
     Today()
     {
-        city ="¹ãÖİ";
+        city ="å¹¿å·";
         date ="2023-7-28";
 
         wendu = 0;
-        type ="¶àÔÆ";
+        type ="å¤šäº‘";
         high = 30;
         low = 18;
 
-        ganmao ="¸ĞÃ°Ö¸Êı";
+        ganmao ="æ„Ÿå†’æŒ‡æ•°";
 
         shidu = "0%";
         pm25 = 0;
-        fx ="ÄÏ·ç";
-        fl ="2¼¶";
-        quality ="ÎŞÊı¾İ";
+        fx ="å—é£";
+        fl ="2çº§";
+        quality ="æ— æ•°æ®";
     }
 
     QString city;
@@ -45,18 +45,18 @@ class Day{
 public:
     Day()
     {
-        week ="ÖÜÎå";
+        week ="å‘¨äº”";
         date ="2023-7-29";
 
-        type ="¶àÔÆ";
+        type ="å¤šäº‘";
 
-        aqi = 0; //¿ÕÆøÖ¸Êı£¬ÓÅ
+        aqi = 0; //ç©ºæ°”æŒ‡æ•°ï¼Œä¼˜
 
         high = 0;
         low = 0;
 
-        fx ="ÄÏ·ç";
-        fl ="2¼¶";
+        fx ="å—é£";
+        fl ="2çº§";
     }
 
     QString week;

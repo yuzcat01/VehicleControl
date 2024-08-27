@@ -47,6 +47,9 @@ Vedio::Vedio(QWidget *parent)
 
 Vedio::~Vedio()
 {
+
+    delete player;
+    delete audioOutput;
     delete ui;
 }
 
@@ -128,6 +131,10 @@ void Vedio::on_speedComboBox_currentIndexChanged(int index)
 
 void Vedio::on_toHome_clicked()
 {
-     emit toHome();
+    emit toHome();
+    if (player->playbackState() == QMediaPlayer::PlayingState) {
+        player->pause();
+        ui->PlayPauseButton->setText("Play");
+    }
 }
 

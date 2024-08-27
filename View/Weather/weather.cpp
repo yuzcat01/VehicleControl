@@ -13,7 +13,7 @@
 #include<QJsonArray>
 #include<QByteArray>
 #include<QMessageBox>
-#include"weathertool.h";
+#include"weathertool.h"
 #include<QPainter>
 
 #define INCREMENT  3//温度每升高或降低一度，y轴坐标的增量

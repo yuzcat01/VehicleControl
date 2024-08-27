@@ -14,16 +14,16 @@ class WeatherTool {
 private:
     static QMap<QString, QString> mCityMap;
 
-    //³õÊ¼»¯CityMap£»
+    //åˆå§‹åŒ–CityMapï¼›
     static void initCityMap() {
-        //1.¶ÁÈ¡ÎÄ¼ş
+        //1.è¯»å–æ–‡ä»¶
         QString filePath = ":/Resource/citycode-2019-08-23.json";
         QFile file(filePath);
         file.open(QIODevice::ReadOnly | QIODevice::Text);
         QByteArray json = file.readAll();
         file.close();
 
-        //2.½âÎö²¢Ğ´Èëµ½map
+        //2.è§£æå¹¶å†™å…¥åˆ°map
         QJsonParseError err;
         QJsonDocument doc = QJsonDocument::fromJson(json,&err);
         if(err.error != QJsonParseError::NoError) {
@@ -52,7 +52,7 @@ public:
 
         QMap<QString, QString>::iterator it = mCityMap.find(cityName);
         if(it == mCityMap.end()) {
-            it = mCityMap.find(cityName + "ÊĞ");
+            it = mCityMap.find(cityName + "å¸‚");
         }
 
         if(it != mCityMap.end()) {

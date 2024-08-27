@@ -37,10 +37,10 @@ protected:
     void parseJson(QByteArray& byteArray);
     void updateUI();
 
-    //ÖØĞ´¸¸ÀàµÄeventfilter·½·¨
+    //é‡å†™çˆ¶ç±»çš„eventfilteræ–¹æ³•
     bool eventFilter(QObject* watched, QEvent* event);
 
-    //»æÖÆ¸ßµÍÎÂÇúÏßµÄº¯Êı
+    //ç»˜åˆ¶é«˜ä½æ¸©æ›²çº¿çš„å‡½æ•°
     void paintHighCurve();
     void paintLowCurve();
 
@@ -52,18 +52,18 @@ private:
     Today mToday;
     Day mDay[6];
 
-    //Ìí¼Ó¿Ø¼şÊı×é(ĞÇÆÚ£¬ÈÕÆÚ)
+    //æ·»åŠ æ§ä»¶æ•°ç»„(æ˜ŸæœŸï¼Œæ—¥æœŸ)
     QList<QLabel*> mWeekList;
     QList<QLabel*> mDateList;
 
-    //Ìí¼Ó¿Ø¼şÊı×é(ÌìÆø£¬ÌìÆøÍ¼±ê)
+    //æ·»åŠ æ§ä»¶æ•°ç»„(å¤©æ°”ï¼Œå¤©æ°”å›¾æ ‡)
     QList<QLabel*> mTypeList;
     QList<QLabel*> mTypeIconList;
 
-    //Ìí¼Ó¿Ø¼şÊı×é(ÎÛÈ¾Ö¸Êı)
+    //æ·»åŠ æ§ä»¶æ•°ç»„(æ±¡æŸ“æŒ‡æ•°)
     QList<QLabel*> mAqiList;
 
-    //Ìí¼Ó¿Ø¼şÊı×é(·çÁ¦·çÏò£©
+    //æ·»åŠ æ§ä»¶æ•°ç»„(é£åŠ›é£å‘ï¼‰
     QList<QLabel*> mFlList;
     QList<QLabel*> mFxList;
 
