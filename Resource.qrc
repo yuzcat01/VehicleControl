@@ -72,4 +72,7 @@
     <qresource prefix="/">
         <file>Resource/citycode-2019-08-23.json</file>
     </qresource>
+    <qresource prefix="/new/prefix3">
+        <file>Resource/img/home/background.jpg</file>
+    </qresource>
 </RCC>

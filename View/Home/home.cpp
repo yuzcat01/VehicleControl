@@ -27,15 +27,27 @@ void Home::init()
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Home::updateTime);
     timer->start(1000); // 每秒更新一次时间
+    QString imagePath = ":/new/prefix3/Resource/img/home/background.jpg"; // 图片路径
+    this->setStyleSheet(QString("background-image: url(%1);").arg(imagePath));
+
 }
 
 //定时器超时调用的更新时间函数
 void Home::updateTime()
 {
-    // 获取当前时间并转换为字符串
-    QString currentTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+    // 获取当前时间
+    QDateTime currentDateTime = QDateTime::currentDateTime();
 
-    //显示时间的QLabel更新其文本
+    // 将日期转换为字符串
+    QString currentDate = currentDateTime.toString("yyyy-MM-dd");
+
+    // 将时间转换为字符串
+    QString currentTime = currentDateTime.toString("HH:mm:ss");
+
+    // 更新日期的QLabel文本
+    ui->dateLabel->setText(currentDate);
+
+    // 更新时间的QLabel文本
     ui->timeLabel->setText(currentTime);
 }
 

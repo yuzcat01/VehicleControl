@@ -20,9 +20,12 @@ signals:
 
 private slots:
     void on_toHome_clicked();
+    void on_sendButton_clicked();
+
 
 private:
     Ui::Communicate *ui;
+    void appendMessage(const QString &message, const QString &sender);
 };
 
 #endif // COMMUNICATE_H
