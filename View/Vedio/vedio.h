@@ -2,64 +2,51 @@
 #define VEDIO_H
 
 #include <QWidget>
-
-#include <QMainWindow>
-#include <QPushButton>
+#include <QVideoWidget>
 #include <QMediaPlayer>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QTime>
+#include <QVBoxLayout>
 #include <QAudioOutput>
-#include <QThread>
-#include <QKeyEvent>
-#include <QEvent>
-#include <stdlib.h>
+#include <QFile>
+#include <QFileDialog>
 
 namespace Ui {
 class Vedio;
 }
+
 
 class Vedio : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Vedio(QWidget *parent = nullptr);
+    Vedio(QWidget *parent = nullptr);
     ~Vedio();
-    QMessageBox*    msg;
-    QMediaPlayer*   player;
-    QAudioOutput*   audioOut;
-    QString         selectVideo;
 
-    QString format_time(int ms);
-    QString get_process_text(QString inTotalDuration, QString inCurrent = "0:0:0");
-    int     get_process_percent(qint64 inValue, qint64 inTotal);
-    void setPlayerStatus(bool playStatus);
-    void init_player();
+    //QString positionTime;
+    //QString durationTime;
 
 signals:
     void toHome();
 
 private slots:
+
+
+    void on_pushButton_clicked();
+    void on_positionChanged(qint64 position);
+    void on_durationChanged(qint64 duration);
+    void on_sliderMoved(int position);
+    void on_volumeSlider_valueChanged(int value);
+    void on_togglePlayPauseButton_clicked();
+    void on_speedComboBox_currentIndexChanged(int index);
+
     void on_toHome_clicked();
 
 private:
     Ui::Vedio *ui;
-    bool eventFilter(QObject *obj, QEvent *e) override;
+
+    QMediaPlayer * player;
+    QVideoWidget * videoWidget;
+    QAudioOutput *audioOutput;
+    QString fileName;
 };
-
-class ProcessBarThread : public QThread
-{
-    Q_OBJECT
-
-public:
-
-protected:
-    void run() override;
-signals:
-    void current_play_duration();
-public slots:
-
-};
-
-#endif // VEDIO_H
+#endif

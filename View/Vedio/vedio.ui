@@ -6,49 +6,56 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>892</width>
-    <height>575</height>
+    <width>1024</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QVideoWidget" name="videoWidget" native="true">
+  <widget class="QLabel" name="volumeLabel">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>10</y>
-     <width>778</width>
-     <height>421</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
-   </property>
-  </widget>
-  <widget class="QSlider" name="processBar">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>430</y>
-     <width>778</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Orientation::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
+     <x>870</x>
      <y>460</y>
-     <width>781</width>
-     <height>28</height>
+     <width>69</width>
+     <height>19</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <property name="text">
+    <string>音量</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>870</x>
+     <y>120</y>
+     <width>91</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>选择文件</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>460</y>
+     <width>711</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QLabel" name="nowTime">
+      <property name="text">
+       <string>现在是</string>
+      </property>
+     </widget>
+    </item>
     <item>
      <spacer name="horizontalSpacer_3">
       <property name="orientation">
@@ -63,17 +70,52 @@
      </spacer>
     </item>
     <item>
-     <widget class="QLabel" name="timeText_2">
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
-      </property>
+     <widget class="QLabel" name="allTime">
       <property name="text">
-       <string>0:0:0 / 0:0:0</string>
+       <string>总时间</string>
       </property>
      </widget>
     </item>
+   </layout>
+  </widget>
+  <widget class="QSlider" name="volumeSlider">
+   <property name="geometry">
+    <rect>
+     <x>900</x>
+     <y>260</y>
+     <width>18</width>
+     <height>160</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Orientation::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="QVideoWidget" name="videoWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>40</y>
+     <width>681</width>
+     <height>381</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>510</y>
+     <width>701</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <spacer name="horizontalSpacer_4">
+     <widget class="QComboBox" name="speedComboBox"/>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer_2">
       <property name="orientation">
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
@@ -85,111 +127,25 @@
       </property>
      </spacer>
     </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>500</y>
-     <width>781</width>
-     <height>37</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1,0,0,2,2,0,0">
     <item>
-     <widget class="QLabel" name="label_2">
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
-      </property>
+     <widget class="QPushButton" name="PlayPauseButton">
       <property name="text">
-       <string>音量:</string>
+       <string>Play</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QSlider" name="volumeBar_2">
+     <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="volumePercentText_2">
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
       </property>
-      <property name="text">
-       <string>0%</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="speedComboBox_2">
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
-      </property>
-      <item>
-       <property name="text">
-        <string notr="true">1.00x</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string notr="true">1.25x</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string notr="true">1.50x</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string notr="true">2.00x</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string notr="true">3.00x</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string notr="true">4.00x</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="openBtn_2">
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
-      </property>
-      <property name="text">
-       <string>打开...</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="startAndPauseBtn_2">
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
-      </property>
-      <property name="text">
-       <string>播放</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="fullScrBtn_2">
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;微软雅黑&quot;;</string>
-      </property>
-      <property name="text">
-       <string>全屏</string>
-      </property>
-     </widget>
+     </spacer>
     </item>
     <item>
      <widget class="QPushButton" name="toHome">
@@ -205,6 +161,19 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QSlider" name="vSlider">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>430</y>
+     <width>691</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Orientation::Horizontal</enum>
+   </property>
   </widget>
  </widget>
  <customwidgets>
