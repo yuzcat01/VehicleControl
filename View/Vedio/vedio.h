@@ -2,27 +2,51 @@
 #define VEDIO_H
 
 #include <QWidget>
+#include <QVideoWidget>
+#include <QMediaPlayer>
+#include <QVBoxLayout>
+#include <QAudioOutput>
+#include <QFile>
+#include <QFileDialog>
 
 namespace Ui {
 class Vedio;
 }
+
 
 class Vedio : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Vedio(QWidget *parent = nullptr);
+    Vedio(QWidget *parent = nullptr);
     ~Vedio();
+
+    //QString positionTime;
+    //QString durationTime;
 
 signals:
     void toHome();
 
 private slots:
+
+
+    void on_pushButton_clicked();
+    void on_positionChanged(qint64 position);
+    void on_durationChanged(qint64 duration);
+    void on_sliderMoved(int position);
+    void on_volumeSlider_valueChanged(int value);
+    void on_togglePlayPauseButton_clicked();
+    void on_speedComboBox_currentIndexChanged(int index);
+
     void on_toHome_clicked();
 
 private:
     Ui::Vedio *ui;
-};
 
-#endif // VEDIO_H
+    QMediaPlayer * player;
+    QVideoWidget * videoWidget;
+    QAudioOutput *audioOutput;
+    QString fileName;
+};
+#endif

@@ -2,6 +2,7 @@
 #define HOME_H
 
 #include <QWidget>
+#include <QPainter>
 
 namespace Ui {
 class Home;
@@ -14,8 +15,10 @@ class Home : public QWidget
 public:
     explicit Home(QWidget *parent = nullptr);
     ~Home();
-    void lookTime();
+
     void init();
+
+
 
 signals:
     void toWeather();

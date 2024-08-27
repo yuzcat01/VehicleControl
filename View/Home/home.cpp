@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QTime>
 #include <QTimer>
+#include <QtMath>
 
 Home::Home(QWidget *parent)
     : QWidget(parent)
@@ -11,7 +12,7 @@ Home::Home(QWidget *parent)
 {
     ui->setupUi(this);
     init();
-    lookTime();
+
 
 }
 
@@ -28,23 +29,6 @@ void Home::init()
     timer->start(1000); // 每秒更新一次时间
 }
 
-void Home::lookTime()
-{
-    // 获取当前本地时间
-    QDateTime now = QDateTime::currentDateTime();
-
-    // 转换为字符串
-    // 使用 Qt::ISODate 格式，你也可以使用其他格式，如 Qt::RFC2822Date, Qt::SystemLocaleDate 等
-    QString dateTimeString = now.toString(Qt::ISODate);
-
-
-    // 使用自定义格式
-    QString customFormat = now.toString("yyyy-MM-dd HH:mm:ss");
-
-    ui->timeLabel->setText(customFormat);
-
-}
-
 //定时器超时调用的更新时间函数
 void Home::updateTime()
 {
@@ -54,6 +38,8 @@ void Home::updateTime()
     //显示时间的QLabel更新其文本
     ui->timeLabel->setText(currentTime);
 }
+
+
 
 void Home::on_pushButton_clicked()
 {

@@ -7,6 +7,7 @@
         <file>Resource/img/Weather/w4.png</file>
         <file>Resource/img/Map/enlarge.png</file>
         <file>Resource/img/Map/reduce.png</file>
+<<<<<<< HEAD
         <file>Resource/img/Weather/res/back.png</file>
         <file>Resource/img/Weather/res/background.png</file>
         <file>Resource/img/Weather/res/bg.jpg</file>
@@ -59,6 +60,13 @@
         <file>Resource/img/Weather/res/type/ZhongXue.png</file>
         <file>Resource/img/Weather/res/type/ZhongYu.png</file>
         <file>Resource/img/Weather/res/type/neige.txt</file>
+=======
+        <file>Resource/img/Music/icons/icon-list.png</file>
+        <file>Resource/img/Music/icons/icon-musical.png</file>
+        <file>Resource/img/Music/icons/icon-order.png</file>
+        <file>Resource/img/Music/icons/icon-random.png</file>
+        <file>Resource/img/Music/icons/icon-repeat.png</file>
+>>>>>>> 7dca9ead0bd2fc9cc311714e15f4b48020c59696
     </qresource>
     <qresource prefix="/qss/prefix2">
         <file>Resource/qss/myQss.qss</file>
