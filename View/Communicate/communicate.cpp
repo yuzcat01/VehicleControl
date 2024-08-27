@@ -5,6 +5,7 @@
 Communicate::Communicate(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Communicate)
+    , webSocket(new QWebSocket)
 {
     ui->setupUi(this);
 
@@ -23,7 +24,7 @@ Communicate::~Communicate()
 
 void Communicate::on_toHome_clicked()
 {
-     emit toHome();
+    emit toHome();
 }
 
 void Communicate::on_sendButton_clicked()
@@ -38,10 +39,6 @@ void Communicate::on_sendButton_clicked()
         // 清空输入框
         ui->messageInput->clear();
 
-        // 模拟回复
-        QTimer::singleShot(1000, [this](){
-            appendMessage("This is a reply.", "Chatbot");
-        });
         // 发送消息到WebSocket服务器
         webSocket->sendTextMessage(message);
     }
