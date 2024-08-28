@@ -22,6 +22,9 @@ void MainWindow::init()
     // WeatherPage
     ui->stackedWidget->addWidget(&weather);
     connect(&home,&Home::toWeather,this,[=](){
+        if(weather.isSearched == false){
+            weather.getWeatherInfo("北京");
+        }
         ui->stackedWidget->setCurrentWidget(&weather);
     });
     connect(&weather,&Weather::toHome,this,[=]{

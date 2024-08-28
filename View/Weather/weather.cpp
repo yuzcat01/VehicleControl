@@ -25,6 +25,7 @@ Weather::Weather(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Weather)
     , cityCode("101010100")
+    , isSearched(false)
 {
     ui->setupUi(this);
 
@@ -64,7 +65,6 @@ Weather::Weather(QWidget *parent)
     mTypeMap.insert("小雪", ":/img/prefix1/Resource/img/Weather/res/type/XiaoXue.png");
     mTypeMap.insert("中雪", ":/img/prefix1/Resource/img/Weather/res/type/ZhongXue.png");
 
-
     mTypeMap.insert("雨夹雪", ":/img/prefix1/Resource/img/Weather/res/type/YuJiaXue.png");
     mTypeMap.insert("霾", ":/img/prefix1/Resource/img/Weather/res/type/Mai.png");
     mTypeMap.insert("扬沙", ":/img/prefix1/Resource/img/Weather/res/type/YangSha.png");
@@ -76,7 +76,6 @@ Weather::Weather(QWidget *parent)
     mTypeMap.insert("雨夹雪", ":/img/prefix1/Resource/img/Weather/res/type/YuJiaXue.png");
     mTypeMap.insert("阵雪", ":/img/prefix1/Resource/img/Weather/res/type/ZhenXue.png");
 
-
     //将控件添加到控件数组(风向与风力)
     mFxList << ui->lblFx0_2 << ui->lblFx1_2 << ui->lblFx2_2 << ui->lblFx3_2 << ui->lblFx4_2 << ui->lblFx5_2;
     mFlList << ui->lblFl0_2 << ui->lblFl1_2 << ui->lblFl2_2 << ui->lblFl3_2 << ui->lblFl4_2 << ui->lblFl5_2;
@@ -84,16 +83,11 @@ Weather::Weather(QWidget *parent)
     mNetAccessManager = new QNetworkAccessManager(this);
     connect(mNetAccessManager, &QNetworkAccessManager::finished, this,&Weather::onReplied);
 
-    //直接在构造中请求天气数据（默认为北京的城市编码）
-    // getWeatherInfo("101010100");
-    getWeatherInfo("北京");
-
     //给标签添加事件过滤器
     //参数指定为this，当前窗口对象
     ui->lblHighCurve_2->installEventFilter(this);
     ui->lblLowCurve_2->installEventFilter(this);
 }
-
 
 Weather::~Weather()
 {
@@ -112,7 +106,6 @@ void Weather::getWeatherInfo(QString cityName)
         QMessageBox::warning(this, "天气","请检查输入是否正确！",QMessageBox::Ok);
         return;
     }
-
     QUrl url("http://t.weather.itboy.net/api/weather/city/" + cityCode);
     mNetAccessManager->get(QNetworkRequest(url));
 }
@@ -184,6 +177,8 @@ void Weather::parseJson(QByteArray &byteArray)
 
         //污染指数
         mDay[i+1].aqi = objForecast.value("aqi").toDouble();
+
+        isSearched = true;
     }
 
     //4.解析今天的数据(还有一部分在forecast里面)
@@ -271,9 +266,7 @@ void Weather::updateUI()
         //3.4更新风力风向
         mFxList[i]->setText(mDay[i].fx);
         mFlList[i]->setText(mDay[i].fl);
-
     }
-
 }
 
 bool Weather::eventFilter(QObject *watched, QEvent *event)
@@ -318,7 +311,6 @@ void Weather::paintHighCurve()
         pointY[i] = yCenter - ((mDay[i].high-tempAverage)*INCREMENT);
     }
 
-
     //3.开始绘制
     //3.1。初始化画笔相关的内容
     QPen pen = painter.pen();
@@ -348,7 +340,6 @@ void Weather::paintHighCurve()
             }
             painter.drawLine(pointX[i],pointY[i],pointX[i+1],pointY[i+1]);
         }
-
     }
 }
 
@@ -380,7 +371,6 @@ void Weather::paintLowCurve()
     for(int i=0; i<6; i++) {
         pointY[i] = yCenter - ((mDay[i].low-tempAverage)*INCREMENT);
     }
-
 
     //3.开始绘制
     //3.1。初始化画笔相关的内容
@@ -434,11 +424,8 @@ void Weather::onReplied(QNetworkReply *reply)
     reply->deleteLater();
 }
 
-
-
 void Weather::on_btnSearch_clicked()
 {
     QString cityName = ui->leCity->text();
     getWeatherInfo(cityName);
 }
-
