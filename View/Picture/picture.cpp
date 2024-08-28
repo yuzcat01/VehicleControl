@@ -59,7 +59,8 @@ void Picture::showImage(int index) {
         currentIndex = index;
         QPixmap pixmap(imagePaths[index]);
         ui->imageLabel->setPixmap(pixmap.scaled(ui->imageLabel->size(), Qt::KeepAspectRatio));
-    }
+    }else
+        ui->imageLabel->clear();
 }
 
 void Picture::on_prevButton_clicked()
