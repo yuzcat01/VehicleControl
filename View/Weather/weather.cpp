@@ -40,13 +40,11 @@ Weather::Weather(QWidget *parent)
     //将控件添加到控件数组(污染指数)
     mAqiList << ui->lblQuality0_2 << ui->lblQuality1_2 << ui->lblQuality2_2 << ui->lblQuality3_2 << ui->lblQuality4_2 << ui->lblQuality5_2;
 
-    mTypeMap.insert("暴雪", ":/img/prefix1/Resource/img/Weather/res/type/BaoXue.png");
     mTypeMap.insert("晴", ":/img/prefix1/Resource/img/Weather/res/type/Qing.png");
     mTypeMap.insert("多云", ":/img/prefix1/Resource/img/Weather/res/type/DuoYun.png");
     mTypeMap.insert("阴", ":/img/prefix1/Resource/img/Weather/res/type/Yin.png");
     mTypeMap.insert("雨", ":/img/prefix1/Resource/img/Weather/res/type/Yu.png");
     mTypeMap.insert("雪", ":/img/prefix1/Resource/img/Weather/res/type/Xue.png");
-    mTypeMap.insert("沙尘暴", ":/img/prefix1/Resource/img/Weather/res/type/ShaChenBao.png");
 
     mTypeMap.insert("雷阵雨", ":/img/prefix1/Resource/img/Weather/res/type/LeiZhenYu.png");
     mTypeMap.insert("大雨", ":/img/prefix1/Resource/img/Weather/res/type/DaYu.png");
@@ -57,9 +55,9 @@ Weather::Weather(QWidget *parent)
     mTypeMap.insert("大暴雨", ":/img/prefix1/Resource/img/Weather/res/type/DaBaoYu.png");
     mTypeMap.insert("大到暴雨",":/img/prefix1/Resource/img/Weather/res/type/DaDaoBaoYu.png");
     mTypeMap.insert("暴雨到大暴雨",":/img/prefix1/Resource/img/Weather/res/type/BaoYuDaoDaBaoYu.png");
-    mTypeMap.insert("大暴雨到大暴雨",":/img/prefix1/Resource/img/Weather/res/type/DaBaoYuDaoDaBaoYu.png");
+    mTypeMap.insert("大暴雨到特大暴雨",":/img/prefix1/Resource/img/Weather/res/type/DaBaoYuDaoTeDaBaoYu.png");
 
-    mTypeMap.insert("暴雪",":/img/prefix1/Resource/img/Weather/res/type/BaoXue.png");
+    mTypeMap.insert("暴雪", ":/img/prefix1/Resource/img/Weather/res/type/BaoXue.png");
     mTypeMap.insert("大到暴雪",":/img/prefix1/Resource/img/Weather/res/type/DaDaoBaoXue.png");
     mTypeMap.insert("大雪", ":/img/prefix1/Resource/img/Weather/res/type/DaXue.png");
     mTypeMap.insert("小雪", ":/img/prefix1/Resource/img/Weather/res/type/XiaoXue.png");

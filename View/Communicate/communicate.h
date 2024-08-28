@@ -33,8 +33,6 @@ private slots:
     void on_registerButton_clicked(); // Register button
     void on_logoutButton_clicked();   // Logout button
 
-
-
 private:
     Ui::Communicate *ui;
     QWebSocket *webSocket;          // WebSocket对象
