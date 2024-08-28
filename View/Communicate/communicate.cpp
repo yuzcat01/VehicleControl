@@ -89,6 +89,10 @@ void Communicate::appendMessage(const QString &message, const QString &sender)
 void Communicate::onTextMessageReceived(QString message)
 {
     QList<QString> messageSplits = message.split("：");
+    if(messageSplits.size() == 1){
+        ui->peopleNum->setText(message);
+        return;
+    }
     message = messageSplits[1];
     for(int i = 2; i < messageSplits.size(); ++i)
         message += "：" + messageSplits[i];
@@ -160,7 +164,7 @@ void Communicate::on_registerButton_clicked()
         QMessageBox::critical(this, "Error", registerResponse["message"].toString());
         return;
     } else {
-        QMessageBox::critical(this, "Success", "注册成功");
+        QMessageBox::information(this, "Success", "注册成功");
         ui->passwordInput_2->clear();
         ui->stackedWidget_2->setCurrentIndex(0);
     }

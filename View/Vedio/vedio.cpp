@@ -191,6 +191,7 @@ void Vedio::onItemDoubleClicked(QListWidgetItem *item)
 
         player->play();
     }
+}
 void Vedio::on_playbackStateChanged()
 {
     if(player->playbackState() == QMediaPlayer::StoppedState)
