@@ -42,6 +42,7 @@ private:
     void connectWebSocket();         // Function to connect WebSocket
     void logout();                   // Function to logout
     void appendMessage(const QString &message, const QString &sender);
+    QString SHA256Util(QString rawPassword);
 };
 
 #endif // COMMUNICATE_H
