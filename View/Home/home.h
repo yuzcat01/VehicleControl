@@ -15,10 +15,7 @@ class Home : public QWidget
 public:
     explicit Home(QWidget *parent = nullptr);
     ~Home();
-
     void init();
-
-
 
 signals:
     void toWeather();
@@ -31,15 +28,11 @@ signals:
 
 private slots:
     void on_pushButton_clicked();
-    void on_toMusicPage_clicked();
     void on_pushButton_2_clicked();
-
+    void on_toMusicPage_clicked();
     void on_toCommu_clicked();
-
     void on_toVedio_clicked();
-
     void on_toPic_clicked();
-
     void on_toBrow_clicked();
 
     void updateTime();

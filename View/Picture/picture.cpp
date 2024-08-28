@@ -10,6 +10,7 @@ Picture::Picture(QWidget *parent)
     , currentIndex(-1)
 {
     ui->setupUi(this);
+    ui->imageLabel->setAlignment(Qt::AlignCenter);
 }
 
 Picture::~Picture()
@@ -19,7 +20,7 @@ Picture::~Picture()
 
 void Picture::on_toHome_clicked()
 {
-     emit toHome();
+    emit toHome();
 }
 
 
@@ -32,7 +33,6 @@ void Picture::on_selectButton_clicked()
         updateThumbnailList();
 
         showImage(0);
-
     }
 }
 
@@ -62,9 +62,6 @@ void Picture::showImage(int index) {
     }
 }
 
-
-
-
 void Picture::on_prevButton_clicked()
 {
     if (currentIndex > 0) {
@@ -75,7 +72,6 @@ void Picture::on_prevButton_clicked()
     }
 }
 
-
 void Picture::on_nextButton_clicked()
 {
     if (currentIndex < imagePaths.size() - 1) {
@@ -85,8 +81,6 @@ void Picture::on_nextButton_clicked()
         QMessageBox::information(this, "列表结束", "已查看过最后张图片，自动回到第一张");
     }
 }
-
-
 
 void Picture::on_removeButton_clicked()
 {

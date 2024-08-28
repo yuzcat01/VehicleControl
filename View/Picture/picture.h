@@ -10,7 +10,7 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QList>
-#include <QMouseEvent> // For handling mouse
+#include <QMouseEvent>
 
 namespace Ui {
 class Picture;
@@ -45,11 +45,6 @@ private:
     QList<QString> imagePaths; // Stores the paths of selected images
     int currentIndex = 0;
 
-    //QWidget *previewWidget;     // Container for thumbnails
-    //QHBoxLayout *previewLayout; // Layout for the thumbnails
-    //QScrollArea *previewArea;   // Scroll area for the thumbnails
-
-    //void updateImageDisplay();
     void updateThumbnailList();
 };
 

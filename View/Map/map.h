@@ -27,7 +27,6 @@ public:
     //获取当前主机ip
     void getIp();
 
-
 signals:
     void toHome();
 
@@ -47,7 +46,6 @@ private slots:
     void on_enlargeBtn_clicked();
 
     void on_reduceBtn_clicked();
-
 
 private:
     Ui::Map *ui;

@@ -36,7 +36,6 @@ public:
     //纬度
     double m_y;
 
-
 protected:
     void paintEvent(QPaintEvent *event) override;
 

@@ -9,7 +9,6 @@
 #include "./View/Communicate/communicate.h"
 #include "./View/Vedio/vedio.h"
 #include "./View/Picture/picture.h"
-#include "./View/Browser/browser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,7 +36,5 @@ private:
     Communicate communicate;
     Vedio vedio;
     Picture picture;
-    Browser browser;
-    //to add
 };
 #endif // MAINWINDOW_H

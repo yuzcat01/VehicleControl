@@ -9,6 +9,8 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QEventLoop>
+#include <QLineEdit>
+#include <QCryptographicHash>
 
 Communicate::Communicate(QWidget *parent)
     : QWidget(parent)
@@ -18,6 +20,7 @@ Communicate::Communicate(QWidget *parent)
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
+    ui->passwordInput->setEchoMode(QLineEdit::Password);
 }
 
 Communicate::~Communicate()
@@ -92,8 +95,7 @@ void Communicate::on_loginButton_clicked()
 
     QJsonObject loginData;
     loginData["username"] = username;
-    loginData["password"] = password;
-
+    loginData["password"] = SHA256Util(password);
     QNetworkRequest loginRequest(QUrl("http://localhost:8080/login"));
     loginRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -126,7 +128,7 @@ void Communicate::on_registerButton_clicked()
 
     QJsonObject registrationData;
     registrationData["username"] = username;
-    registrationData["password"] = password;
+    registrationData["password"] = SHA256Util(password);
 
     QNetworkRequest registerRequest(QUrl("http://localhost:8080/register"));
     registerRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -146,4 +148,11 @@ void Communicate::on_registerButton_clicked()
 void Communicate::on_logoutButton_clicked()
 {
     logout();
+}
+
+QString Communicate::SHA256Util(QString rawPassword){
+    rawPassword += "vehiclecontrol";
+    QByteArray password = QCryptographicHash::hash(rawPassword.toUtf8(),QCryptographicHash::Sha256).toHex();
+    qDebug() << static_cast<QString>(password);
+    return static_cast<QString>(password);
 }

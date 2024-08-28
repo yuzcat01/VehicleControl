@@ -7,24 +7,16 @@ Vedio::Vedio(QWidget *parent)
 {
     ui->setupUi(this);
     player = new QMediaPlayer;
-    //player->setSource(QUrl("qrc:/new/prefix1/SnapAny.mp4"));
     audioOutput = new QAudioOutput;
-
 
     player->setVideoOutput(ui->videoWidget);
 
-    // QWidget *centralWidget = new QWidget(this); // 'this' is your QMainWindow or QDialog
-    //QVBoxLayout *layout = new QVBoxLayout(centralWidget);
-    // layout->addWidget(videoWidget);
-
-    // Set the central widget if using QMainWindow
-    // setCentralWidget(centralWidget);
     player->setAudioOutput(audioOutput);
-    audioOutput->setVolume(1.0);
+    audioOutput->setVolume(0.5);
 
     ui->vSlider->installEventFilter(this);
 
-    ui->volumeSlider->setSliderPosition(100);
+    ui->volumeSlider->setSliderPosition(50);
 
     ui->speedComboBox->addItem("0.5x", QVariant(0.5));
     ui->speedComboBox->addItem("1x", QVariant(1.0));  // Default speed
@@ -41,6 +33,7 @@ Vedio::Vedio(QWidget *parent)
     connect(ui->PlayPauseButton, &QPushButton::clicked, this, &Vedio::on_togglePlayPauseButton_clicked);
     connect(ui->speedComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &Vedio::on_speedComboBox_currentIndexChanged);
+    connect(player, &QMediaPlayer::playbackStateChanged, this, &Vedio::on_playbackStateChanged);
 }
 
 Vedio::~Vedio()
@@ -56,8 +49,8 @@ void Vedio::on_pushButton_clicked()
     if (!fileName.isEmpty()) {
         player->setSource(QUrl::fromLocalFile(fileName));
     } else {
-        // Handle the case where no file was selected
-        qWarning("No video file selected!");
+        qWarning("未选择视频！");
+        return;
     }
 
     player->setVideoOutput(ui->videoWidget);
@@ -65,6 +58,7 @@ void Vedio::on_pushButton_clicked()
     audioOutput->setVolume(1.0);
 
     player->play();
+    ui->PlayPauseButton->setText("Pause");
 }
 
 void Vedio::on_positionChanged(qint64 position)
@@ -92,16 +86,13 @@ void Vedio::on_durationChanged(qint64 duration)
     secs %= 60;
     QString totalTime = QString::asprintf("%d:%02d", mins, secs);
     ui->allTime->setText(totalTime);
-
 }
 
 void Vedio::on_volumeSlider_valueChanged(int value)
 {
-    // Convert the slider value (0-100) to a volume percentage (0.0 to 1.0)
     qreal volume = static_cast<qreal>(value) / 100.0;
     audioOutput->setVolume(volume);
 
-    // Update the QLabel to show the volume percentage
     ui->volumeLabel->setText(QString::asprintf("%d%%", value));
 }
 
@@ -110,7 +101,7 @@ void Vedio::on_togglePlayPauseButton_clicked()
     if (player->playbackState() == QMediaPlayer::PlayingState) {
         player->pause();
         ui->PlayPauseButton->setText("Play");
-    } else {
+    } else if(player->hasVideo() == true){
         player->play();
         ui->PlayPauseButton->setText("Pause");
     }
@@ -129,4 +120,10 @@ void Vedio::on_toHome_clicked()
         player->pause();
         ui->PlayPauseButton->setText("Play");
     }
+}
+
+void Vedio::on_playbackStateChanged()
+{
+    if(player->playbackState() == QMediaPlayer::StoppedState)
+        ui->PlayPauseButton->setText("Play");
 }

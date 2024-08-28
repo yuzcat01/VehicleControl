@@ -21,6 +21,7 @@ public:
     explicit Weather(QWidget *parent = nullptr);
     ~Weather();
     void init();
+    bool isSearched;
     void getWeatherInfo(QString cityCode);
 
 signals:
@@ -34,7 +35,6 @@ private slots:
     void on_btnSearch_clicked();
 
 protected:
-
     void parseJson(QByteArray& byteArray);
     void updateUI();
 

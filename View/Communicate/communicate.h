@@ -33,8 +33,6 @@ private slots:
     void on_registerButton_clicked(); // Register button
     void on_logoutButton_clicked();   // Logout button
 
-
-
 private:
     Ui::Communicate *ui;
     QWebSocket *webSocket;          // WebSocket对象
@@ -44,6 +42,7 @@ private:
     void connectWebSocket();         // Function to connect WebSocket
     void logout();                   // Function to logout
     void appendMessage(const QString &message, const QString &sender);
+    QString SHA256Util(QString rawPassword);
 };
 
 #endif // COMMUNICATE_H
