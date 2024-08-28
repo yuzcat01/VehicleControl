@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     init();
     showHome();
+    //定时器
+    QTimer *timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(update()));
+    timer->start(1000);
 }
 
 MainWindow::~MainWindow()
@@ -83,3 +87,4 @@ void MainWindow::showHome()
 {
     ui->stackedWidget->setCurrentWidget(&home);
 }
+

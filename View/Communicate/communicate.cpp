@@ -5,6 +5,7 @@
 Communicate::Communicate(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Communicate)
+    ,webSocket(new QWebSocket)
 {
     ui->setupUi(this);
 
