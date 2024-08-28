@@ -113,19 +113,6 @@
      <string>图片</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="toBrow">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>460</y>
-      <width>131</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>浏览器</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="timeLabel">
     <property name="geometry">
      <rect>

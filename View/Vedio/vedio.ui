@@ -147,19 +147,6 @@
       </property>
      </spacer>
     </item>
-    <item>
-     <widget class="QPushButton" name="toHome">
-      <property name="font">
-       <font>
-        <family>微软雅黑</family>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>回主页</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QSlider" name="vSlider">

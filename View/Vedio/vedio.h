@@ -33,14 +33,10 @@ public:
     Vedio(QWidget *parent = nullptr);
     ~Vedio();
 
-    //QString positionTime;
-    //QString durationTime;
-
 signals:
     void toHome();
 
 private slots:
-
 
     void on_pushButton_clicked();
     void on_positionChanged(qint64 position);
@@ -49,6 +45,7 @@ private slots:
     void on_volumeSlider_valueChanged(int value);
     void on_togglePlayPauseButton_clicked();
     void on_speedComboBox_currentIndexChanged(int index);
+    void on_playbackStateChanged();
 
     void on_toHome_clicked();
 

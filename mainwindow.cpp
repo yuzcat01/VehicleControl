@@ -26,6 +26,9 @@ void MainWindow::init()
     // WeatherPage
     ui->stackedWidget->addWidget(&weather);
     connect(&home,&Home::toWeather,this,[=](){
+        if(weather.isSearched == false){
+            weather.getWeatherInfo("北京");
+        }
         ui->stackedWidget->setCurrentWidget(&weather);
     });
     connect(&weather,&Weather::toHome,this,[=]{
@@ -72,15 +75,6 @@ void MainWindow::init()
     connect(&picture,&Picture::toHome,this,[=]{
         ui->stackedWidget->setCurrentWidget(&home);
     });
-    //BrowserPage
-    ui->stackedWidget->addWidget(&browser);
-    connect(&home,&Home::toBrowser,this,[=](){
-        ui->stackedWidget->setCurrentWidget(&browser);
-    });
-    connect(&browser,&Browser::toHome,this,[=]{
-        ui->stackedWidget->setCurrentWidget(&home);
-    });
-    // To add
 }
 
 void MainWindow::showHome()
