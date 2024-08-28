@@ -19,8 +19,6 @@ class Communicate : public QWidget
 public:
     explicit Communicate(QWidget *parent = nullptr);
     ~Communicate();
-    QString getUsername() const;
-    QString getPassword() const;
 
 signals:
     void toHome();
@@ -33,8 +31,20 @@ private slots:
     void on_registerButton_clicked(); // Register button
     void on_logoutButton_clicked();   // Logout button
 
+    void on_toRegister_clicked();
+
+    void on_toLogin_clicked();
+
+
+    void on_hideandshow_clicked();
+
+    void on_hideandshow_2_clicked();
+
 private:
     Ui::Communicate *ui;
+    QString getUsername() const;
+    QString getPassword() const;
+    QString getPassword_2() const;
     QWebSocket *webSocket;          // WebSocket对象
     QNetworkAccessManager *networkManager;
     QString token;

@@ -20,7 +20,9 @@ Communicate::Communicate(QWidget *parent)
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget_2->setCurrentIndex(0);
     ui->passwordInput->setEchoMode(QLineEdit::Password);
+    ui->passwordInput_2->setEchoMode(QLineEdit::Password);
 }
 
 Communicate::~Communicate()
@@ -43,6 +45,11 @@ QString Communicate::getUsername() const
 QString Communicate::getPassword() const
 {
     return ui->passwordInput->text();
+}
+
+QString Communicate::getPassword_2() const
+{
+    return ui->passwordInput_2->text();
 }
 
 void Communicate::connectWebSocket()
@@ -125,7 +132,11 @@ void Communicate::on_registerButton_clicked()
 {
     QString username = getUsername();
     QString password = getPassword();
-
+    QString password_2 = getPassword_2();
+    if(!(password == password_2)){
+        QMessageBox::critical(this, "Error", "前后密码不一致!");
+        return;
+    }
     QJsonObject registrationData;
     registrationData["username"] = username;
     registrationData["password"] = SHA256Util(password);
@@ -140,9 +151,20 @@ void Communicate::on_registerButton_clicked()
 
     if (registerReply->error() != QNetworkReply::NoError) {
         QMessageBox::critical(this, "Error", "Registration failed!");
-    } else {
-        QMessageBox::information(this, "Success", "Registration successful!");
+        return;
     }
+
+    QJsonObject registerResponse = QJsonDocument::fromJson(registerReply->readAll()).object();
+    int loginCode = registerResponse["code"].toInt();
+    if (loginCode != 1) {
+        QMessageBox::critical(this, "Error", registerResponse["message"].toString());
+        return;
+    } else {
+        QMessageBox::critical(this, "Success", "注册成功");
+        ui->passwordInput_2->clear();
+        ui->stackedWidget_2->setCurrentIndex(0);
+    }
+    return;
 }
 
 void Communicate::on_logoutButton_clicked()
@@ -156,3 +178,40 @@ QString Communicate::SHA256Util(QString rawPassword){
     qDebug() << static_cast<QString>(password);
     return static_cast<QString>(password);
 }
+
+void Communicate::on_toRegister_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(1);
+}
+
+
+void Communicate::on_toLogin_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(0);
+}
+
+
+
+void Communicate::on_hideandshow_clicked()
+{
+    if(ui->passwordInput->echoMode()==QLineEdit::Password){
+        ui->passwordInput->setEchoMode(QLineEdit::Normal);
+        ui->hideandshow->setText("隐藏密码");
+    }else{
+        ui->passwordInput->setEchoMode(QLineEdit::Password);
+        ui->hideandshow->setText("显示密码");
+    }
+}
+
+
+void Communicate::on_hideandshow_2_clicked()
+{
+    if(ui->passwordInput_2->echoMode()==QLineEdit::Password){
+        ui->passwordInput_2->setEchoMode(QLineEdit::Normal);
+        ui->hideandshow_2->setText("隐藏密码");
+    }else{
+        ui->passwordInput_2->setEchoMode(QLineEdit::Password);
+        ui->hideandshow_2->setText("显示密码");
+    }
+}
+
