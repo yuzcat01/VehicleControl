@@ -21,6 +21,7 @@ Vehicle control system for car,使用Qt编写的车载控制系统。
 ### 即时通讯
 
 可以实现文字、语音、图片、文件、视频的即时通讯。
+服务器端见https://github.com/fishshi/vehiclechatserver
 
 ### 天气预报
 
@@ -34,9 +35,6 @@ Vehicle control system for car,使用Qt编写的车载控制系统。
 
 可以浏览本地图片、在线图片。
 
-### 浏览器模块
-
-可以打开常用浏览器，包括谷歌浏览器、火狐浏览器、360浏览器、搜狗浏览器。
 
 ### 定位导航
 
@@ -48,6 +46,7 @@ Vehicle control system for car,使用Qt编写的车载控制系统。
 ## 运行方式
 
 本项目使用Qt Creator开发，在同版本Qt Creator下可以直接打开项目文件运行，其他版本可能需要先转换为Qt 6.7.2版本或者更改其中某些代码。
+通讯服务器端见https://github.com/fishshi/vehiclechatserver
 
 ## 注意事项
 
